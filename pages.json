@@ -1,0 +1,68 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/login/login",
+			"style": {
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+		},{
+				"path" : "pages/index/index",
+				"style" :                                                                                    
+				{
+						"navigationBarTitleText": "",
+						"enablePullDownRefresh": false
+						
+				}
+			},{
+			"path": "pages/me/index",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+			},
+			{
+			"path": "pages/event/index",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+			},
+			{
+			"path": "pages/modify/index",
+			"style": {
+				"navigationBarTitleText": "Back"
+			}
+		}
+    ],
+	"globalStyle": {
+		"navigationStyle": "custom",
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "Football",
+		"navigationBarBackgroundColor": "#fff",
+		"backgroundColor": "#FFFFFF"
+	},
+	"tabBar": {
+		"color": "#909399",
+		"selectedColor": "#2A8EFE",
+		"backgroundColor": "#FFFFFF",
+		"borderStyle": "black",
+		"list": [{
+				"pagePath": "pages/index/index",
+				"iconPath": "static/lanqiu.png",
+				"selectedIconPath": "static/lanqiu_s.png",
+				"text": "%index.home%"
+			},
+			{
+				"pagePath": "pages/event/index",
+				"iconPath": "static/tongji.png",
+				"selectedIconPath": "static/tongji_s.png",
+				"text": "%index.events%"
+			},
+			{
+				"pagePath": "pages/me/index",
+				"iconPath": "static/my.png",
+				"selectedIconPath": "static/my_s.png",
+				"text": "%index.my%"
+			}
+		]
+	}
+}

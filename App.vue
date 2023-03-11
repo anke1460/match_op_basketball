@@ -20,7 +20,7 @@
 	.w-full {
 		width: 100%;
 	}
-	.bg {
+	page {
 		background-color: $u-bg-color;
 	}
 </style>

@@ -174,3 +174,49 @@ text {
 	flex-direction: row;
 	align-items: center;
 }
+
+.flex {
+	display: flex;
+}
+.items-center {
+	align-items: center;
+}
+.justify-between {
+	justify-content: space-between;
+}
+.justify-center {
+	justify-content: center;
+}
+.flex-col {
+	flex-direction: column;
+}
+.flex-1 {
+	flex: 1;
+}
+.flex-shrink {
+	flex-shrink: 1;
+}
+.truncate {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.line-clamp-3 {
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+}
+.text-center {
+	text-align: center;
+}
+.text-left {
+	text-align: left;
+}
+.text-white {
+	color: white;
+}
+.break-normal {
+	overflow-wrap: normal;
+	word-break: normal;
+}

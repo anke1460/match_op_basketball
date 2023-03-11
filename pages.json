@@ -36,7 +36,7 @@
 	"globalStyle": {
 		"navigationStyle": "custom",
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "Football",
+		"navigationBarTitleText": "Basketball",
 		"navigationBarBackgroundColor": "#fff",
 		"backgroundColor": "#FFFFFF"
 	},

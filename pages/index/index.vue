@@ -39,10 +39,10 @@
             <!-- 第一行 -->
             <u-grid :border="false" col="3">
                 <u-grid-item>
-                    <u-button class="plain-blue" text="Other"></u-button>
+                    <u-button class="plain-blue" text="Other" @click="show_other = true"></u-button>
                 </u-grid-item>
                 <u-grid-item>
-                    <u-button class="plain-blue" text="Status"></u-button>
+                    <u-button class="plain-blue" text="Status" @click="show_status = true"></u-button>
                 </u-grid-item>
                 <u-grid-item>
                     <u-button class="plain-blue" text="Append Points"></u-button>
@@ -51,7 +51,7 @@
             <!-- 第二行 -->
             <u-grid :border="false" col="2">
                 <u-grid-item>
-                    <u-button class="primary-red h-42" text="Quarter Start"></u-button>
+                    <u-button class="primary-red h-42" text="Quarter Start" @click="show_quarter_start = true"></u-button>
                 </u-grid-item>
                 <u-grid-item>
                     <u-button class="primary-green h-42" text="Quarter End"></u-button>
@@ -60,10 +60,10 @@
             <!-- 第三行 -->
             <u-grid :border="false" col="3">
                 <u-grid-item>
-                    <u-button class="plain-orange" text="Fouled Out" :plain="true"></u-button>
+                    <u-button class="plain-orange" text="Fouled Out" :plain="true" @click="handleShowBothSidesFun('Fouled Out')"></u-button>
                 </u-grid-item>
                 <u-grid-item>
-                    <u-button class="plain-orange" text="Substitution" :plain="true"></u-button>
+                    <u-button class="plain-orange" text="Substitution" :plain="true" @click="handleShowBothSidesFun('Substitution')"></u-button>
                 </u-grid-item>
                 <u-grid-item>
                     <u-button class="plain-red" text="SOS" :plain="true"></u-button>
@@ -85,25 +85,26 @@
             <u-grid :border="false" col="3" class="big-button-box">
                 <!-- 主队纵列 -->
                 <u-grid-item>
-                    <u-button class="big-button flex items-center h-70" color="linear-gradient(135deg, #FF643C 0%, #FF9E1A 100%)">
+                    <u-button @click="show_home_point = true; point_type = 3" class="big-button flex items-center h-70" color="linear-gradient(135deg, #FF643C 0%, #FF9E1A 100%)">
                         <span class="font-specail">3</span>
                         <view><p class="text-left">Home</p><p class="text-left">Points</p></view>
                     </u-button>
                     <u-button class="big-button h-70 mt-8" color="linear-gradient(135deg, #FFB925 0%, #FF5800 100%)">
                         <view><p>Home</p><p>Rebound</p></view>
                     </u-button>
-                    <u-button class="big-button flex items-center h-70  mt-8" color="linear-gradient(135deg, #FF643C 0%, #FF9E1A 100%)">
+                    <u-button @click="show_home_point = true; point_type = 2" class="big-button flex items-center h-70  mt-8" color="linear-gradient(135deg, #FF643C 0%, #FF9E1A 100%)">
                         <span class="font-specail">2</span>
                         <view><p class="text-left">Home</p><p class="text-left">Points</p></view>
                     </u-button>
                     <u-button class="big-button primary-red h-70 mt-8">
-                        <view><p>Home</p><p>Rebound</p></view>
+                        <view><p>Home</p><p>Possession</p></view>
                     </u-button>
                 </u-grid-item>
-                <u-grid-item>
+                <!-- 中间 -->
+                <u-grid-item class="middle-row">
                     <u-button class="primary-blue h-70" text="Foul"></u-button>
-                    <u-button class="primary-red h-96 mt-8" text="Free Throw"></u-button>
-                    <u-button class="plain-orange h-122 mt-8" text="Time stop" :plain="true"></u-button>
+                    <u-button class="primary-red h-96 mt-8" text="Free Throw" @click="show_free_throw = true"></u-button>
+                    <u-button class="plain-orange h-122 mt-8" text="Time stop" :plain="true" @click="show_time_stop = true"></u-button>
                 </u-grid-item>
                 <!-- 客队纵列 -->
                 <u-grid-item>
@@ -119,16 +120,111 @@
                         <view><p class="text-left">Home</p><p class="text-left">Points</p></view>
                     </u-button>
                     <u-button class="big-button h-70 mt-8" color="linear-gradient(135deg, #1CB8CE 0%, #008BB3 100%)">
-                        <view><p>Away</p><p>Rebound</p></view>
+                        <view><p>Away</p><p>Possession</p></view>
                     </u-button>
                 </u-grid-item>
             </u-grid>
         </view>
-        
+
+        <!-- 弹窗部分 -->
+        <!-- status -->
+        <u-popup :show="show_other" round="16px" mode="center" closeable @close="show_other = false">
+            <view class="popup-container">
+                <view class="popup-title">Other</view>
+                <view class="flex flex-col items-center gap-16 mt-16">
+                    <u-button class="primary-blue h-42" text="Player warm-up"></u-button>
+                    <u-button class="primary-blue h-42" text="Players coming out"></u-button>
+                    <u-button class="primary-blue h-42" text="Game will start soon"></u-button>
+                    <view class="divide-line"></view>
+                    <u-input placeholder="Need custom text?" fontSize="12" :border="'none'" customStyle="height:38px;border-radius:9px;display:block;width:100%;border:1px solid #0A70F5;padding:0 0 0 12px;overflow:hidden;" >
+                        <template slot="suffix">
+                            <u-button text="Send" class="primary-blue" size="mini"></u-button>
+                        </template>
+                    </u-input>
+                </view>
+            </view>
+        </u-popup>
+        <!-- status -->
+        <u-popup :show="show_status" round="16px" mode="center" closeable @close="show_status = false">
+            <view class="popup-container">
+                <view class="popup-title">Status</view>
+                <view class="flex flex-col items-center gap-16 mt-16">
+                    <u-button class="primary-blue h-42" text="Match Cancel"></u-button>
+                    <u-button class="primary-red h-42" text="Game Over"></u-button>
+                </view>
+            </view>
+        </u-popup>
+        <!-- quarter start -->
+        <u-popup :show="show_quarter_start" round="16px" mode="center" closeable @close="show_quarter_start = false">
+            <view class="popup-container">
+                <view class="popup-title">Please choose the quarter you want to start？</view>
+                <view class="flex flex-col items-center gap-16 mt-16">
+                    <u-button class="primary-blue h-42" text="1st Q"></u-button>
+                    <u-button class="primary-blue h-42" text="2nd Q"></u-button>
+                    <u-button class="primary-blue h-42" text="3rd Q"></u-button>
+                    <u-button class="primary-blue h-42" text="4th Q"></u-button>
+                </view>
+            </view>
+        </u-popup>
+        <!-- home point -->
+        <u-popup :show="show_home_point" round="16px" mode="center" closeable @close="show_home_point = false">
+            <view class="popup-container">
+                <view class="popup-title">Home {{point_type}}-Points</view>
+                <view class="flex items-center gap-23 mt-16">
+                    <u-button class="primary-blue h-70" text="In"></u-button>
+                    <u-button class="primary-orange h-70" text="Miss"></u-button>
+                </view>
+            </view>
+        </u-popup>
+        <!-- free throw -->
+        <u-popup :show="show_free_throw" round="16px" mode="center" closeable @close="show_free_throw = false">
+            <view class="popup-container">
+                <view class="popup-title">Free Throw</view>
+                <view class="flex flex-col items-center gap-16 mt-16">
+                    <CheckBox :list="bothSides" v-model="checkFreeThrowTeam"/>
+                    <CheckBox :list="freeThrowPoints" v-model="checkFreeThrowPoint"/>
+                    <view class="divide-line"></view>
+                    <view class="flex items-center gap-23 w-full">
+                        <u-button class="primary-blue h-70" :disabled="(!checkFreeThrowTeam || !checkFreeThrowPoint)" @click="handleFreeThrowFun('in')">Free Throw-In</u-button>
+                        <u-button class="primary-orange h-70" :disabled="(!checkFreeThrowTeam || !checkFreeThrowPoint)" @click="handleFreeThrowFun('miss')">Free Throw-Miss</u-button>
+                    </view>
+                </view>
+            </view>
+        </u-popup>
+        <!-- time stop -->
+        <u-popup :show="show_time_stop" round="16px" mode="center" closeable @close="show_time_stop = false">
+            <view class="popup-container">
+                <view class="popup-title">Time Stop</view>
+                <view class="flex flex-col items-center gap-16 mt-16">
+                    <u-button class="primary-blue h-42" text="Throw In"></u-button>
+                    <u-button class="primary-blue h-42" text="Time Out"></u-button>
+                    <u-button class="primary-blue h-42" text="Play Injury"></u-button>
+                    <u-button class="primary-green h-42" text="Coach Challenge"></u-button>
+                    <u-button class="primary-green h-42" text="VAR Checking"></u-button>
+                    <view class="divide-line"></view>
+                    <u-input placeholder="Need custom text?" fontSize="12" :border="'none'" customStyle="height:38px;border-radius:9px;display:block;width:100%;border:1px solid #0A70F5;padding:0 0 0 12px;overflow:hidden;" >
+                        <template slot="suffix">
+                            <u-button text="Send" class="primary-blue" size="mini"></u-button>
+                        </template>
+                    </u-input>
+                </view>
+            </view>
+        </u-popup>
+        <!-- HOME AWAY 只有主客队按钮的弹窗 -->
+        <u-popup :show="show_both_sides" round="16px" mode="center" closeable @close="show_both_sides = false">
+            <view class="popup-container">
+                <view class="popup-title">{{ popupBothSidesName }}</view>
+                <view class="flex items-center gap-23 mt-16">
+                    <u-button class="primary-yellow h-70" text="Home"></u-button>
+                    <u-button class="primary-green h-70" text="Away"></u-button>
+                </view>
+            </view>
+        </u-popup>
     </view>
 </template>
 
 <script>
+import CheckBox from '@/components/checkbox'
 import {
     transOtherEvents,
     transEvents,
@@ -137,39 +233,39 @@ import {
     transRhythms,
     matchEvent,
 } from "./../../utils.js";
+
 export default {
     data() {
         return {
             is_blink: "",
             bg_color: "background-color: #085BC9",
-            show_alert: false,
-            show_confirm: false,
-            home_away_show: false,
-            shoot_show: false,
-            standby_show: false,
-            throwin_show: false,
-            free_kick_show: false,
-            last_team: "",
-            pk_show: false,
-            safe_show: false,
-            injury_show: false,
-            corner_show: false,
-            other_show: false,
-            select_team_show: false,
-            delete_events_show: false,
-            select_card_show: false,
-            goal_show: false,
-            extra_show: false,
-            unsure_show: false,
-            sos_show: false,
-            start_end_show: false,
-            corner_confirm_click: false,
-            corner_cancel_click: false,
-            goal_confirm_click: false,
-            goal_cancel_click: false,
-            pk_confirm_click: false,
-            pk_cancel_click: false,
-            rekick_show: false,
+
+            // 弹窗是否显示
+            show_other: false,
+            show_status: false,
+            show_quarter_start: false,
+            show_home_point: false,
+            point_type: 2, // 2 or 3
+            show_free_throw: false,
+            show_time_stop: false,
+            show_both_sides: false,  // 只有主客队按钮的弹窗
+            popupBothSidesName: '', // 只有主客队按钮的弹窗 title
+
+            // free throw 的选择值
+            checkFreeThrowTeam: '', // free throw 选择的队伍
+            checkFreeThrowPoint: '', // free throw 选择的分数
+
+            // 小字典
+            bothSides: [
+                { label: 'Home', value: 'home' },
+                { label: 'Away', value: 'away' }
+            ],
+            freeThrowPoints: [
+                { label: '1', value: '1' },
+                { label: '2', value: '2' },
+                { label: '3', value: '3' },
+            ],       
+
             custom_text: "",
             event_title: "",
             rekick_title: "",
@@ -213,14 +309,21 @@ export default {
             return Math.max(`${this.goal[0] || 0}`.length, `${this.goal[1] || 0}`.length)
         }
     },
+    components: {
+        CheckBox
+    },
     methods: {
         onLoad(option) {
             this.lang = uni.getLocale();
         },
         onShow() {},
 
-        handleClick() {
-            console.log('!!!!!')
+        handleFreeThrowFun(type) {
+            console.log('选择的队伍：', this.checkFreeThrowTeam, ' 分数：', this.checkFreeThrowPoint, ' type:', type)
+        },
+        handleShowBothSidesFun(name) {
+            this.show_both_sides = true
+            this.popupBothSidesName = name
         }
     },
 };
@@ -321,14 +424,40 @@ export default {
                 font-size: 28px;
                 font-weight: 600;
                 margin: 0 6px 0 0;
+                font-family: 'Alternate-Bold';
             }
             p {
                 line-height: 1.375;
             }
         }
+        .middle-row {
+            /deep/ .u-button__text {
+                font-size: 16px !important;
+            }
+        }
     }
-    
 }
+
+// 弹窗
+.popup-container {
+    width: 295px;
+    background-color: #fff;
+    padding: 0 24px 24px;
+    border-radius: 16px;
+    overflow: hidden;
+    font-family: PingFangSC-Medium, PingFang SC;
+    .popup-title {
+        text-align: center;
+        font-size: 18px;
+        font-weight: 500;
+        color: rgba(0,0,0,0.9);
+        line-height: 25px;
+        padding: 10px 0 11px;
+    }
+
+}
+
+
 // 按钮颜色
 .plain-blue {
     color:#0A70F5;
@@ -357,13 +486,22 @@ export default {
     border: none;
     color: white;
 }
-.primary-orange {
-    background: linear-gradient(135deg, #1CCE72 0%, #00B365 100%);
+.primary-yellow {
+    background: linear-gradient(135deg, #FFA425 0%, #FF8800 100%);
     border: none;
     color: white;
 }
+.primary-orange {
+    background: linear-gradient(135deg, #FF7C3C 0%, #FF5E1A 100%);
+    border: none;
+    color: white;
+}
+
 .h-42 {
     height: 42px;
+}
+.h-48 {
+    height: 48px;
 }
 .h-70 {
     height: 70px;
@@ -376,6 +514,39 @@ export default {
 }
 .mt-8 {
     margin-top: 8px;
+}
+.mt-16 {
+    margin-top: 16px;
+}
+.gap-23 {
+    gap: 23px;
+}
+.gap-16 {
+    gap: 16px;
+}
+
+.divide-line {
+    height: 1px;
+    padding: 0 24px;
+    background-color: #EEEEEE;
+    width: 100%;
+    box-sizing: content-box;
+}
+
+
+/deep/ .u-popup {
+    .u-icon__icon {
+        font-size: 12px !important;
+        line-height: 12px !important;
+        background-color: #F5F5F5;
+        border-radius: 14px;
+        padding: 5px;
+        color: #7A7A7A;
+    }
+    .u-popup__content__close--top-right {
+        top: 12px;
+        right: 12px;
+    }
 }
 
 

@@ -85,14 +85,14 @@
             <u-grid :border="false" col="3" class="big-button-box">
                 <!-- 主队纵列 -->
                 <u-grid-item>
-                    <u-button @click="show_home_point = true; point_type = 3" class="big-button flex items-center h-70" color="linear-gradient(135deg, #FF643C 0%, #FF9E1A 100%)">
+                    <u-button @click="show_point = true; point_score = 3;point_team='home'" class="big-button flex items-center h-70" color="linear-gradient(135deg, #FF643C 0%, #FF9E1A 100%)">
                         <span class="font-specail">3</span>
                         <view><p class="text-left">Home</p><p class="text-left">Points</p></view>
                     </u-button>
                     <u-button class="big-button h-70 mt-8" color="linear-gradient(135deg, #FFB925 0%, #FF5800 100%)">
                         <view><p>Home</p><p>Rebound</p></view>
                     </u-button>
-                    <u-button @click="show_home_point = true; point_type = 2" class="big-button flex items-center h-70  mt-8" color="linear-gradient(135deg, #FF643C 0%, #FF9E1A 100%)">
+                    <u-button @click="show_point = true; point_score = 2;point_team='home'" class="big-button flex items-center h-70  mt-8" color="linear-gradient(135deg, #FF643C 0%, #FF9E1A 100%)">
                         <span class="font-specail">2</span>
                         <view><p class="text-left">Home</p><p class="text-left">Points</p></view>
                     </u-button>
@@ -108,16 +108,16 @@
                 </u-grid-item>
                 <!-- 客队纵列 -->
                 <u-grid-item>
-                    <u-button class="big-button h-70" color="linear-gradient(135deg, #A1D321 0%, #43B800 100%)">
+                    <u-button @click="show_point = true; point_score = 3;point_team='away'" class="big-button h-70" color="linear-gradient(135deg, #A1D321 0%, #43B800 100%)">
                         <span class="font-specail">3</span>
                         <div><p>Away</p><p>Points</p></div>
                     </u-button>
                     <u-button class="big-button primary-green h-70 mt-8">
                         <view><p>Away</p><p>Rebound</p></view>
                     </u-button>
-                    <u-button class="big-button flex items-center h-70  mt-8" color="linear-gradient(135deg, #1CCEB9 0%, #00B3A1 100%)">
+                    <u-button @click="show_point = true; point_score = 3;point_team='away'" class="big-button flex items-center h-70  mt-8" color="linear-gradient(135deg, #1CCEB9 0%, #00B3A1 100%)">
                         <span class="font-specail">2</span>
-                        <view><p class="text-left">Home</p><p class="text-left">Points</p></view>
+                        <view><p class="text-left">Away</p><p class="text-left">Points</p></view>
                     </u-button>
                     <u-button class="big-button h-70 mt-8" color="linear-gradient(135deg, #1CB8CE 0%, #008BB3 100%)">
                         <view><p>Away</p><p>Possession</p></view>
@@ -200,9 +200,9 @@
         </u-modal>
         
         <!-- home point -->
-        <u-popup :show="show_home_point" round="16px" mode="center" closeable @close="show_home_point = false">
+        <u-popup :show="show_point" round="16px" mode="center" closeable @close="show_point = false">
             <view class="popup-container">
-                <view class="popup-title">Home {{point_type}}-Points</view>
+                <view class="popup-title"><text class="capitalize">{{point_team}}</text> {{point_score}}-Points</view>
                 <view class="flex items-center gap-23 mt-16">
                     <u-button class="primary-blue h-70" text="In"></u-button>
                     <u-button class="primary-orange h-70" text="Miss"></u-button>
@@ -321,8 +321,9 @@ export default {
             show_quarter_start_comfirm: false,
             show_quarter_end_comfirm: false,
             show_sos: false,
-            show_home_point: false,
-            point_type: 2, // 2 or 3
+            show_point: false,
+            point_score: 2, // 2 or 3
+            point_team: 'home', // home or away
             show_foul: false,
             show_technical_foul: false,
             show_free_throw: false,
@@ -654,6 +655,9 @@ export default {
 }
 .gap-16 {
     gap: 16px;
+}
+.capitalize {
+    text-transform: capitalize;
 }
 
 .divide-line {

@@ -6,10 +6,17 @@
 
 <script>
 export default {
-    props: {
-        list: {
-            type: Array,
-            require: true
+    model: {
+        prop: 'value',
+        event: 'input'
+    },
+    props: ['list', 'value'],
+    mounted() {
+        this.checkValue = this.value
+    },
+    watch: {
+        'value': function(val) {
+            this.checkValue = val
         }
     },
     data() {

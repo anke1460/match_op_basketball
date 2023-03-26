@@ -1,5 +1,6 @@
 <template>
     <view class="me-container flex">
+        <view class="page-title">Me</view>
         <view class="list">
             <view class="title">list name</view>
             <view class="header flex items-center">
@@ -24,6 +25,7 @@
                 :text="$t('logout')"
                 color="linear-gradient(135deg, #FE6557 0%, #F5483B 100%)"
                 @click="logout"
+                customStyle="border-radius:8px;"
             >
             </u-button>
         </view>
@@ -82,6 +84,15 @@ export default {
     padding: 16px 24px;
     flex-direction: column;
     justify-content: space-between;
+    .page-title {
+        font-size: 18px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: #333333;
+        line-height: 25px;
+        text-align: center;
+        padding-bottom: 16px;
+    }
     .list {
         background-color: #fff;
         border-radius: 8px;

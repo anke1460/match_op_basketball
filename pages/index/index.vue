@@ -45,7 +45,7 @@
                     <u-button class="plain-blue" text="Status" @click="show_status = true"></u-button>
                 </u-grid-item>
                 <u-grid-item>
-                    <u-button class="plain-blue" text="Append Points"></u-button>
+                    <u-button class="plain-blue" text="modify" @click="handleGotoModify"></u-button>
                 </u-grid-item>
             </u-grid>
             <!-- 第二行 -->
@@ -54,7 +54,7 @@
                     <u-button class="primary-red h-42" text="Quarter Start" @click="show_quarter_start = true"></u-button>
                 </u-grid-item>
                 <u-grid-item>
-                    <u-button class="primary-green h-42" text="Quarter End"></u-button>
+                    <u-button class="primary-green h-42" text="Quarter End" @click="show_quarter_end_comfirm = true"></u-button>
                 </u-grid-item>
             </u-grid>
             <!-- 第三行 -->
@@ -66,16 +66,16 @@
                     <u-button class="plain-orange" text="Substitution" :plain="true" @click="handleShowBothSidesFun('Substitution')"></u-button>
                 </u-grid-item>
                 <u-grid-item>
-                    <u-button class="plain-red" text="SOS" :plain="true"></u-button>
+                    <u-button class="plain-red" text="SOS" :plain="true" @click="show_sos = true"></u-button>
                 </u-grid-item>
             </u-grid>
             <!-- 第四行 -->
             <u-grid :border="false" col="3" customStyle="padding: 6px 0;" >
-                <u-grid-item class="time-sign">
-                    <u-button class="plain-blue" customStyle="color:#000000" text="1"></u-button>
+                <u-grid-item class="time-sign input-box">
+                    <u-input v-model="adjustTime.min" :border="'none'" inputAlign="center" clearable customStyle="padding:6px;border-radius:8px;border:1px solid #0A70F5;background-color:#fff;"/>
                 </u-grid-item>
-                <u-grid-item>
-                    <u-button class="plain-blue" customStyle="color:#000000" text="2"></u-button>
+                <u-grid-item class="input-box">
+                    <u-input v-model="adjustTime.sec" :border="'none'" inputAlign="center" clearable customStyle="padding:6px;border-radius:8px;border:1px solid #0A70F5;background-color:#fff;"/>
                 </u-grid-item>
                 <u-grid-item>
                     <u-button class="primary-blue" text="Adjust Time"></u-button>
@@ -102,7 +102,7 @@
                 </u-grid-item>
                 <!-- 中间 -->
                 <u-grid-item class="middle-row">
-                    <u-button class="primary-blue h-70" text="Foul"></u-button>
+                    <u-button class="primary-blue h-70" text="Foul" @click="show_foul = true"></u-button>
                     <u-button class="primary-red h-96 mt-8" text="Free Throw" @click="show_free_throw = true"></u-button>
                     <u-button class="plain-orange h-122 mt-8" text="Time stop" :plain="true" @click="show_time_stop = true"></u-button>
                 </u-grid-item>
@@ -144,6 +144,7 @@
                 </view>
             </view>
         </u-popup>
+
         <!-- status -->
         <u-popup :show="show_status" round="16px" mode="center" closeable @close="show_status = false">
             <view class="popup-container">
@@ -154,18 +155,50 @@
                 </view>
             </view>
         </u-popup>
+
         <!-- quarter start -->
         <u-popup :show="show_quarter_start" round="16px" mode="center" closeable @close="show_quarter_start = false">
             <view class="popup-container">
                 <view class="popup-title">Please choose the quarter you want to start？</view>
                 <view class="flex flex-col items-center gap-16 mt-16">
-                    <u-button class="primary-blue h-42" text="1st Q"></u-button>
-                    <u-button class="primary-blue h-42" text="2nd Q"></u-button>
-                    <u-button class="primary-blue h-42" text="3rd Q"></u-button>
-                    <u-button class="primary-blue h-42" text="4th Q"></u-button>
+                    <u-button class="primary-blue h-42" text="1st Q" @click="handleQuarterComfirm('1')"></u-button>
+                    <u-button class="primary-blue h-42" text="2nd Q" @click="handleQuarterComfirm('2')"></u-button>
+                    <u-button class="primary-blue h-42" text="3rd Q" @click="handleQuarterComfirm('3')"></u-button>
+                    <u-button class="primary-blue h-42" text="4th Q" @click="handleQuarterComfirm('4')"></u-button>
                 </view>
             </view>
         </u-popup>
+        <u-modal 
+            :show="show_quarter_start_comfirm" 
+            :showCancelButton="true" 
+            :cancelText="'Cancel'" 
+            :confirmText="'OK'" 
+            confirmColor="#0A70F5" 
+            width="295"
+            @confirm="handleComfirm"
+            @cancel="show_quarter_start_comfirm = false"
+        >
+            <template #default>
+                <view class="modal-content">Are you sure you want to send this event?</view>
+            </template>
+        </u-modal>
+
+        <!-- quarter end -->
+        <u-modal 
+            :show="show_quarter_end_comfirm" 
+            :showCancelButton="true" 
+            :cancelText="'Cancel'" 
+            :confirmText="'OK'" 
+            confirmColor="#0A70F5" 
+            width="295"
+            @confirm="handleQuarterEndComfirm"
+            @cancel="show_quarter_end_comfirm = false"
+        >
+            <template #default>
+                <view class="modal-content">Are you sure you want to send this event?</view>
+            </template>
+        </u-modal>
+        
         <!-- home point -->
         <u-popup :show="show_home_point" round="16px" mode="center" closeable @close="show_home_point = false">
             <view class="popup-container">
@@ -176,8 +209,43 @@
                 </view>
             </view>
         </u-popup>
+
+        <!-- SOS -->
+        <u-popup :show="show_sos" round="16px" mode="center" closeable @close="show_sos = false">
+            <view class="popup-container">
+                <view class="popup-title">SOS</view>
+                <view class="flex flex-col items-center gap-16 mt-16">
+                    <u-button class="primary-red h-42" text="Match Disconnect"></u-button>
+                    <u-button class="primary-green h-42" text="Match Connect"></u-button>
+                </view>
+            </view>
+        </u-popup>
+
+        <!-- Foul -->
+        <u-popup :show="show_foul" round="16px" mode="center" closeable @close="show_foul = false">
+            <view class="popup-container">
+                <view class="popup-title">Foul</view>
+                <view class="flex flex-col items-center gap-16 mt-16">
+                    <view class="flex items-center gap-23 w-full">
+                        <u-button class="primary-yellow h-70" text="Home"></u-button>
+                        <u-button class="primary-green h-70" text="Away"></u-button>
+                    </view>
+                    <u-button class="primary-blue h-48" text="Technical Foul" @click="show_technical_foul = true;show_foul = false"></u-button>
+                </view>
+            </view>
+        </u-popup>
+        <u-popup :show="show_technical_foul" round="16px" mode="center" closeable @close="show_technical_foul = false">
+            <view class="popup-container">
+                <view class="popup-title">Technical Foul</view>
+                <view class="flex items-center gap-23 w-full mt-16">
+                    <u-button class="primary-yellow h-70" text="Home"></u-button>
+                    <u-button class="primary-green h-70" text="Away"></u-button>
+                </view>
+            </view>
+        </u-popup>
+
         <!-- free throw -->
-        <u-popup :show="show_free_throw" round="16px" mode="center" closeable @close="show_free_throw = false">
+        <u-popup :show="show_free_throw" round="16px" mode="center" closeable @close="handleFreeThrowCloseFun">
             <view class="popup-container">
                 <view class="popup-title">Free Throw</view>
                 <view class="flex flex-col items-center gap-16 mt-16">
@@ -185,20 +253,21 @@
                     <CheckBox :list="freeThrowPoints" v-model="checkFreeThrowPoint"/>
                     <view class="divide-line"></view>
                     <view class="flex items-center gap-23 w-full">
-                        <u-button class="primary-blue h-70" :disabled="(!checkFreeThrowTeam || !checkFreeThrowPoint)" @click="handleFreeThrowFun('in')">Free Throw-In</u-button>
-                        <u-button class="primary-orange h-70" :disabled="(!checkFreeThrowTeam || !checkFreeThrowPoint)" @click="handleFreeThrowFun('miss')">Free Throw-Miss</u-button>
+                        <u-button class="primary-blue h-70" :disabled="(!checkFreeThrowTeam || !checkFreeThrowPoint)" @click="handleFreeThrowFun('in')">In</u-button>
+                        <u-button class="primary-orange h-70" :disabled="(!checkFreeThrowTeam || !checkFreeThrowPoint)" @click="handleFreeThrowFun('miss')">Miss</u-button>
                     </view>
                 </view>
             </view>
         </u-popup>
+
         <!-- time stop -->
         <u-popup :show="show_time_stop" round="16px" mode="center" closeable @close="show_time_stop = false">
             <view class="popup-container">
                 <view class="popup-title">Time Stop</view>
                 <view class="flex flex-col items-center gap-16 mt-16">
-                    <u-button class="primary-blue h-42" text="Throw In"></u-button>
-                    <u-button class="primary-blue h-42" text="Time Out"></u-button>
-                    <u-button class="primary-blue h-42" text="Play Injury"></u-button>
+                    <u-button class="primary-blue h-42" text="Out of Bound" @click="handleShowBothSidesFun('Out of Bound')"></u-button>
+                    <u-button class="primary-blue h-42" text="Time Out" @click="handleShowBothSidesFun('Time Out')"></u-button>
+                    <u-button class="primary-blue h-42" text="Play Injury" @click="handleShowBothSidesFun('Play Injury')"></u-button>
                     <u-button class="primary-green h-42" text="Coach Challenge"></u-button>
                     <u-button class="primary-green h-42" text="VAR Checking"></u-button>
                     <view class="divide-line"></view>
@@ -210,6 +279,7 @@
                 </view>
             </view>
         </u-popup>
+
         <!-- HOME AWAY 只有主客队按钮的弹窗 -->
         <u-popup :show="show_both_sides" round="16px" mode="center" closeable @close="show_both_sides = false">
             <view class="popup-container">
@@ -238,22 +308,31 @@ export default {
     data() {
         return {
             is_blink: "",
-            bg_color: "background-color: #085BC9",
-
+            
+            
+            adjustTime: {
+                min: 1,
+                sec: 1
+            },
             // 弹窗是否显示
             show_other: false,
             show_status: false,
             show_quarter_start: false,
+            show_quarter_start_comfirm: false,
+            show_quarter_end_comfirm: false,
+            show_sos: false,
             show_home_point: false,
             point_type: 2, // 2 or 3
+            show_foul: false,
+            show_technical_foul: false,
             show_free_throw: false,
             show_time_stop: false,
             show_both_sides: false,  // 只有主客队按钮的弹窗
             popupBothSidesName: '', // 只有主客队按钮的弹窗 title
 
             // free throw 的选择值
-            checkFreeThrowTeam: '', // free throw 选择的队伍
-            checkFreeThrowPoint: '', // free throw 选择的分数
+            checkFreeThrowTeam: 'home', // free throw 选择的队伍, 默认选择 home
+            checkFreeThrowPoint: '2', // free throw 选择的分数，默认选择 2
 
             // 小字典
             bothSides: [
@@ -316,15 +395,46 @@ export default {
         onLoad(option) {
             this.lang = uni.getLocale();
         },
+
         onShow() {},
 
         handleFreeThrowFun(type) {
             console.log('选择的队伍：', this.checkFreeThrowTeam, ' 分数：', this.checkFreeThrowPoint, ' type:', type)
         },
+
+        handleFreeThrowCloseFun() {
+            this.show_free_throw = false
+            this.checkFreeThrowTeam = 'home'
+            this.checkFreeThrowPoint = '2'
+        },
+
         handleShowBothSidesFun(name) {
             this.show_both_sides = true
+            this.show_time_stop = false
             this.popupBothSidesName = name
-        }
+        },
+
+        handleGotoModify() {
+            this.$u.route({
+				url: 'pages/modify/index',
+				type: 'navigateTo',
+			})
+        },
+
+        // 小节开始二次确认
+        handleQuarterComfirm(type) {
+            this.show_quarter_start = false
+            this.show_quarter_start_comfirm = true
+        },
+
+        // 小节结束确认弹窗
+        handleQuarterEndComfirm() {
+            this.show_quarter_end_comfirm = false
+        },
+
+        handleComfirm() {
+            this.show_quarter_start_comfirm = false
+        },
     },
 };
 </script>
@@ -397,6 +507,12 @@ export default {
     }
 }
 
+.input-box {
+    &.u-grid-item--hover-class {
+        opacity: 1;
+    }
+}
+
 .operation-area {
     padding: 6px 11px;
     .u-grid-item {
@@ -454,7 +570,22 @@ export default {
         line-height: 25px;
         padding: 10px 0 11px;
     }
+}
 
+// 模态框
+/deep/ .u-popup__content {
+    border-radius: 16px !important;
+    .modal-content {
+        font-size: 18px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: rgba(0,0,0,0.9);
+        line-height: 25px;
+        text-align: center;
+    }
+    .u-modal__button-group__wrapper--hover {
+        background: #EEEEEE;
+    }
 }
 
 

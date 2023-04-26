@@ -41,7 +41,8 @@ uni.$u.http.setConfig((config) => {
 		config.header.lang = uni.getLocale();
 		config.header.Authorization = uni.getStorageSync('token');
 		config.baseURL = `/api`;
-		// config.baseURL = `http://test.kospt.win/`;
+        // config.baseURL = `http://localhost:3003/`;
+		config.baseURL = `http://test.kospt.win/`;
     // config.baseURL = `http://20.255.63.11/`; 
 		// config.baseURL = `http://kospt.win/`
     return config

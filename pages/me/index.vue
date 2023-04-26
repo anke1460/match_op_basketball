@@ -5,18 +5,18 @@
             <view class="title">list name</view>
             <view class="header flex items-center">
                 <view class="u-text-left">Quarter</view>
-                <view class="u-text-center">homename</view>
-                <view class="u-text-right">awayname</view>
+                <view class="u-text-center">{{home}}</view>
+                <view class="u-text-right">{{guest}}</view>
             </view>
-            <view v-for="item,index in 6" :key="index" class="item flex items-center">
-                <view class="u-text-left">1st</view>
-                <view class="u-text-center">20</view>
-                <view class="u-text-right">23</view>
+            <view v-for="item,index in quarterList" :key="index" class="item flex items-center">
+                <view class="u-text-left">{{item.name}}</view>
+                <view class="u-text-center">{{item.home}}</view>
+                <view class="u-text-right">{{item.away}}</view>
             </view>
             <view class="result item flex items-center">
                 <view class="u-text-left bold">Total</view>
-                <view class="u-text-center text-orange">134</view>
-                <view class="u-text-right text-green">160</view>
+                <view class="u-text-center text-orange">{{home_score}}</view>
+                <view class="u-text-right text-green">{{guest_score}}</view>
             </view>
         </view>
 
@@ -39,32 +39,45 @@ export default {
             stat: {},
             guest: {},
             home: {},
+            home_score: 0,
+            guest_score: 0,
+            quarterList: []
         };
     },
     methods: {
-        onLoad() {},
-        onShow() {
-            if (uni.getStorageSync("token") != "") {
-                uni.$u.http
-                    .get(
-                        `orbit_occer/${uni.getStorageSync(
-                            "match_id"
-                        )}/statistics`,
-                        {},
-                        { withCredentials: true }
-                    )
-                    .then((res) => {
-                        this.stat = res.data;
-                        this.guest = res.data.guest;
-                        this.home = res.data.home;
-                    });
-            } else {
-                uni.$u.route({
-                    url: "pages/login/login",
-                    type: "reLaunch",
-                });
-            }
-        },
+       onShow() {
+           this.match_id = uni.getStorageSync('match_id');
+           uni.$u.http.get(`basketball/match_input/${this.match_id}/process_points`, {}, {withCredentials: true}).then(res => {
+               console.log(res.data.data)
+               this.quarterList = res.data.data;
+               this.home_score = res.data.home_score;
+               this.guest_score = res.data.guest_score;
+               this.home = res.data.home;
+               this.guest = res.data.guest;
+           });
+       },
+        // onShow() {
+        //     if (uni.getStorageSync("token") != "") {
+        //         uni.$u.http
+        //             .get(
+        //                 `orbit_occer/${uni.getStorageSync(
+        //                     "match_id"
+        //                 )}/statistics`,
+        //                 {},
+        //                 { withCredentials: true }
+        //             )
+        //             .then((res) => {
+        //                 this.stat = res.data;
+        //                 this.guest = res.data.guest;
+        //                 this.home = res.data.home;
+        //             });
+        //     } else {
+        //         uni.$u.route({
+        //             url: "pages/login/login",
+        //             type: "reLaunch",
+        //         });
+        //     }
+        // },
         logout() {
             uni.setStorageSync("token", "");
             uni.setStorageSync("last_login_time", "");

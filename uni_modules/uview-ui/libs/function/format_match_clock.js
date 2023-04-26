@@ -116,4 +116,17 @@ function format_match_clock(position, time, youth_race, has_extra_time) {
   return count_time;
 }
 
-export default format_match_clock;
+function game_time_display(game_time) {
+  var m_ = "00'";
+  var s_ = "00";
+  if (game_time > 0) {
+    var minutes = parseInt(game_time / 60);
+    var seconds = game_time % 60;
+    m_ = (minutes < 10 ? "0" : "") + minutes + "'";
+    s_ = (seconds < 10 ? "0" : "") + seconds;
+  }
+  return m_ + s_;
+}
+
+
+export default {format_match_clock, game_time_display};

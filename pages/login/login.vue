@@ -5,7 +5,8 @@
 		<view class="top"></view>
 		<view class="content">
 			<view class="title">
-				<image src="../../static/logo.png" class="logo"></image>
+                Basketball
+				<!-- <image src="../../static/logo.png" class="logo"></image> -->
 			</view>
 			<u-form :model="model" :rules="rules" ref="loginForm" errorType="message">
 				<u-form-item label-width="80" :label="$t('login.user')" prop="name">
@@ -132,8 +133,8 @@ export default {
 								config.withCredentials = true;
 								config.header.lang = uni.getLocale();
 								config.header.Authorization = uni.getStorageSync('token');
-								// config.baseURL = `http://test.kospt.win/`;
-								config.baseURL = `http://localhost:3003/`;
+								config.baseURL = `http://test.kospt.win/`;
+								// config.baseURL = `http://localhost:3003/`;
 								// config.baseURL = `http://20.255.63.11/`;
 								// config.baseURL = `http://kospt.win/`
 						    return config
@@ -183,11 +184,15 @@ export default {
 	.click-btn {
 		opacity: 0.5;
 	}
+    
 	
+ 
+
 	uni-page-body {
 		position: relative;
 		height: 100%;
-	}
+        background-color: transparent
+    }
 	.logo {
 		width: 200px;
 		height: 73px;

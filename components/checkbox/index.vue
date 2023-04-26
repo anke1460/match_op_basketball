@@ -10,7 +10,7 @@ export default {
         prop: 'value',
         event: 'input'
     },
-    props: ['list', 'value'],
+    props: ['list', 'value', 'team'],
     mounted() {
         this.checkValue = this.value
     },
@@ -26,8 +26,11 @@ export default {
     },
     methods: {
         handleCheck(value) {
-            this.checkValue = value
-            this.$emit('input', value)
+            if (this.team) {
+                this.checkValue = value
+                this.$emit('input', value)
+            }
+           
         }
     }
 }

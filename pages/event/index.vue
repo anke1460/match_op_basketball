@@ -7,14 +7,22 @@
             </view>
         </view>
 		<view class="content-box">
-			<view class="content flex items-center" v-for="item,index in 6" :key="index">
-				<view class="col-item truncate">1st Q 09'09</view>
-				<view class="col-item truncate">Jacketled Jacketled</view>
-				<view class="col-item truncate">posssession</view>
-				<view class="col-item truncate">21:33:09</view>
-				<view class="col-item small">
-					<img class="delete" src="../../static/svg/delete.svg" alt="">
-				</view>
+			<view class="content flex items-center" v-for="item,index in events" :key="index">
+                <template v-if="item.status_id">
+                    <view class="col-item truncate deleted-text">{{item.qt}}</view>
+                    <view class="col-item truncate deleted-text">{{item.team_info}}</view>
+                    <view class="col-item truncate deleted-text">{{item.event_info}}</view>
+                    <view class="col-item truncate deleted-text">{{item.time}}</view>
+                </template>
+                <template v-else>
+                    <view class="col-item truncate">{{item.qt}}</view>
+                    <view class="col-item truncate">{{item.team_info}}</view>
+                    <view class="col-item truncate">{{item.event_info}}</view>
+                    <view class="col-item truncate">{{item.time}}</view>
+                    <view class="col-item small">
+                        <img class="delete" src="../../static/svg/delete.svg" alt="" @tap="deleteEvent(`${item.id}`, `${index}`)">
+                    </view>
+                 </template>
 			</view>
 		</view>
     </view>
@@ -32,16 +40,47 @@ export default {
 				{label: ''},
 			],
             events: [],
+            match_id: '',
         };
     },
     methods: {
-        onShow() {
+        onLoad() {
+             this.match_id = uni.getStorageSync('match_id');
         },
+        onShow() {
+           uni.$u.http.get(`basketball/match_input/${this.match_id}/delete_event_list`, {}, {withCredentials: true}).then(res => {
+            console.log("222", res)
+            this.events = res.data.events;
+            })
+        },
+        deleteEvent(id, index) {
+            uni.$u.http.post(`basketball/match_input/${this.match_id}/delete_event`, {mp_id: id}, {withCredentials: true}).then(res => {
+            	if (res.data.success == false) {
+            		this.$refs.uNotify.show({
+            			top: 10,
+            			type: 'error',
+            			color: '#fff',
+            			bgColor: '#e5291e',
+            			message: res.data.msg,
+            			duration: 1000 * 2,
+            			fontSize: 20,
+            			safeAreaInsetTop:true
+            		})
+            		
+            	} else {
+            		this.$set(this.events[index], 'status_id', 1)
+                    // this.events = this.events.concat(res.data.event)
+                }
+            })
+        }
     },
 };
 </script>
 
 <style lang="scss" scoped>
+.deleted-text {
+  text-decoration: line-through;
+}
 .event-container {
 	min-height: calc(100vh - 50px);
 	background-color: #fff;

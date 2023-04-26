@@ -120,6 +120,7 @@ const $u = {
 	debounce,
 	throttle,
 	// format_match_clock,
+    game_time_display,
 	transOtherEvents,
 	transEvents,
 	// transMpStatus,

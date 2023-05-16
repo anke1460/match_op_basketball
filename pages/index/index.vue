@@ -286,7 +286,7 @@
                 <view class="popup-title">{{ popupBothSidesName }}</view>
                 <view class="flex items-center gap-23 mt-16">
                     <u-button class="primary-yellow h-70" text="Home" @tap="sendNormalEvent(true)"></u-button>
-                    <u-button class="primary-green h-70" text="Away" @tap="sendNormalEvent(true)"></u-button>
+                    <u-button class="primary-green h-70" text="Away" @tap="sendNormalEvent(false)"></u-button>
                 </view>
             </view>
         </u-popup>
@@ -411,7 +411,6 @@ export default {
         },
         
         onLoad(option) {
-            console.log('load')
             this.lang = uni.getLocale();
             if (uni.getStorageSync('token') != '') {
             this.match_id = uni.getStorageSync('match_id');
@@ -630,13 +629,13 @@ export default {
                   this.pk = 'b_substitution';
                   break;
                 case 'Out of Bound':
-                  this.pk = 'b_fouled_out';
+                  this.pk = 'b_out_of_bound';
                   break;
                 case 'Time Out':
                   this.pk = 'b_timeout';
                   break;
                 case 'Play Injury':
-                  this.pk = 'b_substitution';
+                  this.pk = 'b_injury';
                   break;
             }
             this.show_both_sides = false;
@@ -648,7 +647,6 @@ export default {
         },
         
         sendAjustTime() {
-          console.log(this.adjustTime.min, this.adjustTime.sec) 
           if (this.adjustTime.min == "" || this.adjustTime.sec == "") {
               this.$refs.uNotify.show({
               	top: 10,
@@ -729,6 +727,12 @@ export default {
         },
         
         sendEvent(params) {
+        if (params.pk == 'b_foul') {
+            if (this.time_inter) {
+            	clearInterval(this.time_inter);
+            	this.time_inter = null;
+            }
+        }
          uni.$u.http.post(`basketball/match_input/${this.match_id}/create_event`, params, {withCredentials: true}).then(res => {
              if (params.pk != 'b_adjust_time') {
                  // 调整事件不需要提示闪烁
@@ -757,22 +761,22 @@ export default {
                   if (res.data.data.text) {
                       this.event_content = this.match_events[res.data.data.match_event_id][this.lang == 'en' ? 'en' : 'zh_cn'] + "(" + res.data.data.text + ") " + team ;
                   } else {
-                      this.event_content = this.match_events[res.data.data.match_event_id][this.lang == 'en' ? 'en' : 'zh_cn'] + " " + team ;
+                      if (res.data.data.match_event_id) {
+                          this.event_content = this.match_events[res.data.data.match_event_id][this.lang == 'en' ? 'en' : 'zh_cn'] + " " + team ;
+                      }
                   }
+                  this.status = res.data.data.status;
                   
                   this.freshMatchTime(res.data.data.time_stop, res.data.data.position_display, res.data.data.game_time)
                  }
-                 console.log(res.data.callback, res.data)
                  if (res.data.callback) {
                      if (res.data.callback.goal) {
                          if (res.data.callback.goal.team == 'home') {
                             var score = this.goal[1];
                             this.goal = [res.data.callback.goal.score, score]
-                            console.log(1111, this.goal)
                          } else {
                             var score = this.goal[0];
                             this.goal = [score, res.data.callback.goal.score]
-                             console.log(2222, this.goal)
                          }
                      }
                  }

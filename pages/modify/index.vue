@@ -1,10 +1,6 @@
 <template>
     <view class="bgs">
         <u-navbar @leftClick="leftClick" :title="$t('modify')">
-            <view class="u-nav-slot" slot="right">
-                <image src="../../static/save.png" class="save-icon"></image>
-                <text @tap="save()">{{ $t("save") }}</text>
-            </view>
         </u-navbar>
         <view class="mbody">
             <view class="title">Append Points</view>
@@ -15,7 +11,7 @@
 					<u-grid-item class="away">Away</u-grid-item>
 				</u-grid>
 				<view v-for="item,index in quarterList" :key="index">
-					<u-grid :border="false" col="3" customStyle="padding: 12px 0;">
+					<u-grid :border="false" col="4" customStyle="padding: 12px 0;">
 						<u-grid-item class="quarter-title">{{ item.name }}</u-grid-item>
 						<u-grid-item>
 							<u-input v-model="item.home" :border="'none'" type="number" inputAlign="center" clearable customStyle="padding:8px;border-radius:8px;border:1px solid #0A70F5;background-color:#EBF3FE;margin-right: 8px;"/>
@@ -23,6 +19,9 @@
 						<u-grid-item>
 							<u-input v-model="item.away" :border="'none'"  type="number" inputAlign="center" clearable customStyle="padding:8px;border-radius:8px;border:1px solid #0A70F5;background-color:#EBF3FE;margin-left: 8px;"/>
 						</u-grid-item>
+                        <u-grid-item>
+                         <view @tap="save(index)" customStyle="background: blue;color:#fff;">{{ $t("save") }}</view>
+                        </u-grid-item>
 					</u-grid>
 					<view class="divide-line" v-if="index != 3"></view>
 				</view>
@@ -91,7 +90,7 @@ export default {
                 this.quarterList = res.data.data
             });
         },
-		save() {
+		save(index) {
 			  window.list = this.quarterList.map(v => {
 				return {
                     position: v.position,
@@ -129,35 +128,34 @@ export default {
                }
             }
             
-            if (list.length > 0) {
-                uni.$u.http.put(`basketball/match_input/${this.match_id}/update_process_points`, {scores: list, game_time: 0, pk: 'b_update_points'}, {withCredentials: true}).then(res => {
-                    if (res.data.success == false) {
-                    	this.$refs.uNotify.show({
-                    		top: 10,
-                    		type: 'error',
-                    		color: '#fff',
-                    		bgColor: '#e5291e',
-                    		message: res.data.msg,
-                    		duration: 1000 * 2,
-                    		fontSize: 20,
-                    		safeAreaInsetTop:true
-                    	})
-                    	
-                    } else {
-                        this.$refs.uNotify.show({
-                        	top: 10,
-                        	type: 'error',
-                        	color: '#fff',
-                        	bgColor: '#a0c630',
-                        	message: 'Success',
-                        	duration: 1000 * 1,
-                        	fontSize: 20,
-                        	safeAreaInsetTop:true
-                        })
-                    }
-                });
-            }
-			console.log('值：', list)
+            console.log(this.quarterList[index])
+            uni.$u.http.put(`basketball/match_input/${this.match_id}/update_process_points`, {home_score: this.quarterList[index].home, guest_score: this.quarterList[index].away, position: this.quarterList[index].position, game_time: 0, pk: 'b_update_points'}, {withCredentials: true}).then(res => {
+                if (res.data.success == false) {
+                	this.$refs.uNotify.show({
+                		top: 10,
+                		type: 'error',
+                		color: '#fff',
+                		bgColor: '#e5291e',
+                		message: res.data.msg,
+                		duration: 1000 * 2,
+                		fontSize: 20,
+                		safeAreaInsetTop:true
+                	})
+                	
+                } else {
+                    this.$refs.uNotify.show({
+                    	top: 10,
+                    	type: 'error',
+                    	color: '#fff',
+                    	bgColor: '#a0c630',
+                    	message: 'Success',
+                    	duration: 1000 * 1,
+                    	fontSize: 20,
+                    	safeAreaInsetTop:true
+                    })
+                }
+            });
+            
 		},
 		leftClick() {
 			this.$u.route({

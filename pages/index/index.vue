@@ -5,13 +5,13 @@
         <view class="score-header u-type-primary-bg u-font-12 text-white">
             <!-- 比分 -->
             <view class="flex items-center justify-between u-padding-left-36 u-padding-right-36 u-padding-top-32 u-padding-bottom-8">
-                <view class="team flex flex-col items-center justify-center"><view class="w-full line-clamp-3 text-center break-normal">{{home_team}}</view></view>
+                <view class="team flex flex-col items-center justify-center"><view class="w-full line-clamp-3 team-name text-center break-normal">{{home_team}}</view></view>
                 <view class="core flex flex-1 items-center justify-center">
                     <span :class="[calculateGoalLength > 2 ? 'small' : '']" class="goal flex-1">{{ goal[0] }}</span>
                     <span class="split">:</span>
                     <span :class="[calculateGoalLength > 2 ? 'small' : '']" class="goal flex-1">{{ goal[1] }}</span>
                 </view>
-                <view class="team flex flex-col items-center justify-center"><view class="w-full line-clamp-3 text-center break-normal">{{guest_team}} </view></view>
+                <view class="team flex flex-col items-center justify-center"><view class="w-full line-clamp-3 team-name text-center break-normal">{{guest_team}} </view></view>
             </view>
             <!-- 时间 -->
             <view class="timer-box flex items-center justify-between u-padding-left-38 u-padding-right-38 u-padding-bottom-24">
@@ -310,8 +310,8 @@ export default {
         return {
             is_blink: "",
             adjustTime: {
-                min: 1,
-                sec: 1
+                min: '',
+                sec: ''
             },
             bg_color: "background-color: #085BC9",
             match_events: {},
@@ -459,6 +459,7 @@ export default {
                 this.team_langs = res.data.team_langs;
                 this.status = res.data.status;
                 this.position = res.data.position;
+                this.position_display = res.data.position_display;
                 
                 if (res.data.event_time) {
                     this.event_time = res.data.event_time;
@@ -473,6 +474,7 @@ export default {
         		this.match_sec = res.data.game_time;
                 this.status = res.data.status;
                 this.position = res.data.position;
+                this.position_display = res.data.position_display;
         		
         		this.match_time = this.game_time_display(res.data.game_time)
         		if (res.data.status !== 1) {
@@ -751,22 +753,23 @@ export default {
                 })
              } else {
                 if (res.data.data) {
-                  setTimeout(() => {
-                    this.is_blink = '';
-                  }, 2000)
-                  this.bg_color = "background-color: #" + res.data.data.color;
-                              
-                  this.event_time = res.data.data.occur_at;
-                  var team = res.data.data.match_team_id ? this.team_langs[res.data.data.match_team_id][this.lang == 'en' ? 'en' : 'zh_cn'] : "";
-                  if (res.data.data.text) {
-                      this.event_content = this.match_events[res.data.data.match_event_id][this.lang == 'en' ? 'en' : 'zh_cn'] + "(" + res.data.data.text + ") " + team ;
-                  } else {
-                      if (res.data.data.match_event_id) {
-                          this.event_content = this.match_events[res.data.data.match_event_id][this.lang == 'en' ? 'en' : 'zh_cn'] + " " + team ;
+                  if (params.pk != 'b_adjust_time') {
+                      setTimeout(() => {
+                        this.is_blink = '';
+                      }, 2000)
+                      this.bg_color = "background-color: #" + res.data.data.color;
+                                  
+                      this.event_time = res.data.data.occur_at;
+                      var team = res.data.data.match_team_id ? this.team_langs[res.data.data.match_team_id][this.lang == 'en' ? 'en' : 'zh_cn'] : "";
+                      if (res.data.data.text) {
+                          this.event_content = this.match_events[res.data.data.match_event_id][this.lang == 'en' ? 'en' : 'zh_cn'] + "(" + res.data.data.text + ") " + team ;
+                      } else {
+                          if (res.data.data.match_event_id) {
+                              this.event_content = this.match_events[res.data.data.match_event_id][this.lang == 'en' ? 'en' : 'zh_cn'] + " " + team ;
+                          }
                       }
+                      this.status = res.data.data.status;
                   }
-                  this.status = res.data.data.status;
-                  
                   this.freshMatchTime(res.data.data.time_stop, res.data.data.position_display, res.data.data.game_time)
                  }
                  if (res.data.callback) {
@@ -819,7 +822,9 @@ export default {
 ::v-deep .u-button {
     height: 38px;
 }
-
+.team-name {
+    font-size: 14px;
+}
 .score-header {
     line-height: 1.4;
     .team {

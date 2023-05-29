@@ -96,7 +96,6 @@ export default {
 	background-color: #F5F5F5;
     padding: 16px 24px;
     flex-direction: column;
-    justify-content: space-between;
     .page-title {
         font-size: 18px;
         font-family: PingFangSC-Medium, PingFang SC;
@@ -152,7 +151,7 @@ export default {
     }
     .button-box {
         padding: 0 40px;
-        margin-top: auto;
+        margin-top: 30px;
     }
 }
 </style>

@@ -72,10 +72,10 @@
             <!-- 第四行 -->
             <u-grid :border="false" col="3" customStyle="padding: 6px 0;" >
                 <u-grid-item class="time-sign input-box">
-                    <u-input v-model="adjustTime.min" :border="'none'" inputAlign="center" clearable customStyle="padding:6px;border-radius:8px;border:1px solid #0A70F5;background-color:#fff;"/>
+                    <u-input v-model="adjustTime.min" :border="'none'"  type="number" inputAlign="center" clearable customStyle="padding:6px;border-radius:8px;border:1px solid #0A70F5;background-color:#fff;"/>
                 </u-grid-item>
                 <u-grid-item class="input-box">
-                    <u-input v-model="adjustTime.sec" :border="'none'" inputAlign="center" clearable customStyle="padding:6px;border-radius:8px;border:1px solid #0A70F5;background-color:#fff;"/>
+                    <u-input v-model="adjustTime.sec" :border="'none'"  type="number" inputAlign="center" clearable customStyle="padding:6px;border-radius:8px;border:1px solid #0A70F5;background-color:#fff;"/>
                 </u-grid-item>
                 <u-grid-item>
                     <u-button class="primary-blue" text="Adjust Time" @tap="sendAjustTime"></u-button>
@@ -85,13 +85,16 @@
             <u-grid :border="false" col="3" class="big-button-box">
                 <!-- 主队纵列 -->
                 <u-grid-item>
-                    <u-button @click="show_point = true; point_score = 3;point_team='home'" class="big-button flex items-center h-70" color="linear-gradient(135deg, #FF643C 0%, #FF9E1A 100%)">
+                    <u-button class="big-button h-70" color="linear-gradient(135deg, #FFB925 0%, #FF5800 100%)" @tap="sendFreeThrow(true)">
+                        <view><p>Home</p><p>Free Throw</p></view>
+                    </u-button>
+                    <u-button @click="show_point = true; point_score = 3;point_team='home'" class="big-button flex items-center h-70 mt-8" color="linear-gradient(135deg, #FF643C 0%, #FF9E1A 100%)">
                         <span class="font-specail">3</span>
                         <view><p class="text-left">Home</p><p class="text-left">Points</p></view>
                     </u-button>
-                    <u-button class="big-button h-70 mt-8" color="linear-gradient(135deg, #FFB925 0%, #FF5800 100%)" @tap="sendRebound(true)">
+                  <!--  <u-button class="big-button h-70 mt-8" color="linear-gradient(135deg, #FFB925 0%, #FF5800 100%)" @tap="sendRebound(true)">
                         <view><p>Home</p><p>Rebound</p></view>
-                    </u-button>
+                    </u-button> -->
                     <u-button @click="show_point = true; point_score = 2;point_team='home'" class="big-button flex items-center h-70  mt-8" color="linear-gradient(135deg, #FF643C 0%, #FF9E1A 100%)">
                         <span class="font-specail">2</span>
                         <view><p class="text-left">Home</p><p class="text-left">Points</p></view>
@@ -103,18 +106,23 @@
                 <!-- 中间 -->
                 <u-grid-item class="middle-row">
                     <u-button class="primary-blue h-70" text="Foul" @click="show_foul = true"></u-button>
-                    <u-button class="primary-red h-96 mt-8" text="Free Throw" @click="show_free_throw = true"></u-button>
-                    <u-button class="plain-orange h-122 mt-8" text="Time stop" :plain="true" @click="show_time_stop = true"></u-button>
+                    <u-button class="primary-red h-70 mt-8" text="Time Out" @click="handleShowBothSidesFun('Time Out')"></u-button>
+                    <u-button class="primary-blue h-70 mt-8" text="Out of Bound" @click="show_outofbound = true"></u-button>
+                    <!-- <u-button class="primary-red h-70 mt-8" text="Free Throw" @click="show_free_throw = true"></u-button> -->
+                    <u-button class="plain-orange h-70 mt-8" text="Time stop" :plain="true" @click="sendTimeout"></u-button>
                 </u-grid-item>
                 <!-- 客队纵列 -->
                 <u-grid-item>
-                    <u-button @click="show_point = true; point_score = 3;point_team='away'" class="big-button h-70" color="linear-gradient(135deg, #A1D321 0%, #43B800 100%)">
+                    <u-button class="big-button primary-green h-70" @tap="sendFreeThrow(false)">
+                        <view><p>Away</p><p>Free Throw</p></view>
+                    </u-button>
+                    <u-button @click="show_point = true; point_score = 3;point_team='away'" class="big-button h-70 mt-8" color="linear-gradient(135deg, #A1D321 0%, #43B800 100%)">
                         <span class="font-specail">3</span>
                         <div><p>Away</p><p>Points</p></div>
                     </u-button>
-                    <u-button class="big-button primary-green h-70 mt-8" @tap="sendRebound(false)">
+                  <!--  <u-button class="big-button primary-green h-70 mt-8" @tap="sendRebound(false)">
                         <view><p>Away</p><p>Rebound</p></view>
-                    </u-button>
+                    </u-button> -->
                     <u-button @click="show_point = true; point_score = 2;point_team='away'" class="big-button flex items-center h-70  mt-8" color="linear-gradient(135deg, #1CCEB9 0%, #00B3A1 100%)">
                         <span class="font-specail">2</span>
                         <view><p class="text-left">Away</p><p class="text-left">Points</p></view>
@@ -135,6 +143,9 @@
                     <u-button class="primary-blue h-42" text="Player warm-up" @tap="sendOther('Player warm-up')"></u-button>
                     <u-button class="primary-blue h-42" text="Players coming out" @tap="sendOther('Players coming out')"></u-button>
                     <u-button class="primary-blue h-42" text="Game will start soon" @tap="sendOther('Game will start soon')"></u-button>
+                    <u-button class="primary-green h-42" text="Play Injury" @click="handleShowBothSidesFun('Play Injury')"></u-button>
+                    <u-button class="primary-green h-42" text="Coach Challenge" @tap="sendOther('Coach Challenge')"></u-button>
+                    <u-button class="primary-green h-42" text="VAR Checking" @tap="sendOther('VAR Checking')"></u-button>
                     <view class="divide-line"></view>
                     <u-input placeholder="Need custom text?" fontSize="12" :border="'none'" v-model="custom_text"  customStyle="height:38px;border-radius:9px;display:block;width:100%;border:1px solid #0A70F5;padding:0 0 0 12px;overflow:hidden;" >
                         <template slot="suffix">
@@ -220,7 +231,18 @@
                 </view>
             </view>
         </u-popup>
-
+       <!-- out of bound -->
+        <u-popup :show="show_outofbound" round="16px" mode="center" closeable @close="show_outofbound = false">
+            <view class="popup-container">
+                <view class="popup-title">Out of Bound</view>
+                <view class="flex flex-col items-center gap-16 mt-16">
+                    <view class="flex items-center gap-23 w-full">
+                        <u-button class="primary-yellow h-70" text="Home" @tap="sendOutofbound(true)"></u-button>
+                        <u-button class="primary-green h-70" text="Away" @tap="sendOutofbound(false)"></u-button>
+                    </view>
+                </view>
+            </view>
+        </u-popup>
         <!-- Foul -->
         <u-popup :show="show_foul" round="16px" mode="center" closeable @close="show_foul = false">
             <view class="popup-container">
@@ -249,12 +271,11 @@
             <view class="popup-container">
                 <view class="popup-title">Free Throw</view>
                 <view class="flex flex-col items-center gap-16 mt-16">
-                    <CheckBox :list="bothSides" v-model="checkFreeThrowTeam" @input="freeThrowTeam" :team="'true'"/>
                     <CheckBox :list="freeThrowPoints" v-model="checkFreeThrowPoint" @input="freeThrowPoint" :team="checkFreeThrowTeam"/>
                     <view class="divide-line"></view>
                     <view class="flex items-center gap-23 w-full">
-                        <u-button class="primary-blue h-70" :disabled="(!checkFreeThrowTeam || !checkFreeThrowPoint)" @click="handleFreeThrowFun('b_ft_goal')">In</u-button>
-                        <u-button class="primary-orange h-70" :disabled="(!checkFreeThrowTeam || !checkFreeThrowPoint)" @click="handleFreeThrowFun('b_ft_miss')">Miss</u-button>
+                        <u-button class="primary-blue h-70"  @click="handleFreeThrowFun('b_ft_goal')">In</u-button>
+                        <u-button class="primary-orange h-70"  @click="handleFreeThrowFun('b_ft_miss')">Miss</u-button>
                     </view>
                 </view>
             </view>
@@ -265,7 +286,6 @@
             <view class="popup-container">
                 <view class="popup-title">Time Stop</view>
                 <view class="flex flex-col items-center gap-16 mt-16">
-                    <u-button class="primary-blue h-42" text="Out of Bound" @click="handleShowBothSidesFun('Out of Bound')"></u-button>
                     <u-button class="primary-blue h-42" text="Time Out" @click="handleShowBothSidesFun('Time Out')"></u-button>
                     <u-button class="primary-blue h-42" text="Play Injury" @click="handleShowBothSidesFun('Play Injury')"></u-button>
                     <u-button class="primary-green h-42" text="Coach Challenge" @tap="sendOther('Coach Challenge')"></u-button>
@@ -326,6 +346,7 @@ export default {
             point_score: 2, // 2 or 3
             point_team: 'home', // home or away
             show_foul: false,
+            show_outofbound: false,
             show_technical_foul: false,
             show_free_throw: false,
             show_time_stop: false,
@@ -523,6 +544,7 @@ export default {
         handleShowBothSidesFun(name) {
             this.show_both_sides = true
             this.show_time_stop = false
+            this.show_other = false;
             this.popupBothSidesName = name
         },
 
@@ -585,7 +607,23 @@ export default {
                 data: value
             })
         },
+        sendTimeout() {
+            this.sendEvent({
+                team: null,
+                pk: 'b_pause',
+                game_time: this.match_sec,
+                min: '',
+                sec: '',
+                success: () => {
+                  // this.show_time_stop = true   
+                }
+            })
         
+        },
+        sendFreeThrow(is_home) {
+            this.show_free_throw = true;
+            this.checkFreeThrowTeam =  is_home ? 'home' : 'guest'
+        },
         sendOther(text) {
             if (text) {
                 this.show_other = false;
@@ -637,15 +675,25 @@ export default {
                   this.pk = 'b_timeout';
                   break;
                 case 'Play Injury':
-                  this.pk = 'b_injury';
+                  this.pk = 'b_other_custom';
                   break;
             }
             this.show_both_sides = false;
-            this.sendEvent({
-                team: is_home ? 'home' : 'guest',
-                pk: this.pk,
-                game_time: this.match_sec,
-            })
+            if (this.popupBothSidesName == 'Play Injury') {
+                this.sendEvent({
+                    team: '',
+                    pk: this.pk,
+                    game_time: this.match_sec,
+                    data: "Play Injury " + (is_home ? "home" : "guest")
+                })
+            } else {
+                this.sendEvent({
+                    team: is_home ? 'home' : 'guest',
+                    pk: this.pk,
+                    game_time: this.match_sec,
+                })
+            }
+           
         },
         
         sendAjustTime() {
@@ -682,6 +730,8 @@ export default {
                   sec: this.adjustTime.sec,
                   game_time: this.match_sec,
               })
+              this.adjustTime.min = "";
+              this.adjustTime.sec = "";
           }
         },
         send_disconnect() {
@@ -700,6 +750,16 @@ export default {
               pk: 'b_match_connect',
               game_time: this.match_sec,
           })
+        },
+        
+        sendOutofbound(is_home) {
+            this.show_outofbound = false;
+            this.sendEvent({
+                team: is_home ? 'home' : 'guest',
+                pk: 'b_out_of_bound',
+                game_time: this.match_sec,
+              
+            })
         },
         
         sendFoul(is_home) {
@@ -736,10 +796,6 @@ export default {
             }
         }
          uni.$u.http.post(`basketball/match_input/${this.match_id}/create_event`, params, {withCredentials: true}).then(res => {
-             if (params.pk != 'b_adjust_time') {
-                 // 调整事件不需要提示闪烁
-                this.is_blink = 'blink';
-             }
              if (res.data.success == false) {
                 this.$refs.uNotify.show({
                     top: 10,
@@ -752,6 +808,13 @@ export default {
                     safeAreaInsetTop:true
                 })
              } else {
+                 if (params.pk != 'b_adjust_time') {
+                     // 调整事件不需要提示闪烁
+                    this.is_blink = 'blink';
+                 }
+               if (params.success) {
+                  params.success()
+               }
                 if (res.data.data) {
                   if (params.pk != 'b_adjust_time') {
                       setTimeout(() => {

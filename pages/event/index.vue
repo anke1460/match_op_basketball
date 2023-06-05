@@ -2,8 +2,8 @@
     <view class="event-container">
 		<view class="title u-text-center">Events</view>
 		<view class="header flex items-center">
-            <view class="col-item" :class="[index == 4?'small':'']" v-for="item,index in headerNav" :key="index">
-                <text class="">{{ item.label }}</text>
+            <view class="" :class="[index == 3?'small time':'col-item']" v-for="item,index in headerNav" :key="index">
+              <text class="">{{ item.label }}</text>
             </view>
         </view>
 		<view class="content-box">
@@ -12,13 +12,13 @@
                     <view class="col-item truncate deleted-text">{{item.qt}}</view>
                     <view class="col-item truncate deleted-text">{{item.team_info}}</view>
                     <view class="col-item truncate deleted-text">{{item.event_info}}</view>
-                    <view class="col-item truncate deleted-text">{{item.time}}</view>
+                    <view class="time truncate deleted-text">{{item.time}}</view>
                 </template>
                 <template v-else>
                     <view class="col-item truncate">{{item.qt}}</view>
                     <view class="col-item truncate">{{item.team_info}}</view>
                     <view class="col-item truncate">{{item.event_info}}</view>
-                    <view class="col-item truncate">{{item.time}}</view>
+                    <view class="time truncate">{{item.time}}</view>
                     <view class="col-item small">
                         <img class="delete" src="../../static/svg/delete.svg" alt="" @tap="deleteEvent(`${item.id}`, `${index}`)">
                     </view>
@@ -37,7 +37,6 @@ export default {
 				{label: 'Team'},
 				{label: 'Event'},
 				{label: 'time'},
-				{label: ''},
 			],
             events: [],
             match_id: '',
@@ -49,7 +48,6 @@ export default {
         },
         onShow() {
            uni.$u.http.get(`basketball/match_input/${this.match_id}/delete_event_list`, {}, {withCredentials: true}).then(res => {
-            console.log("222", res)
             this.events = res.data.events;
             })
         },
@@ -80,6 +78,9 @@ export default {
 <style lang="scss" scoped>
 .deleted-text {
   text-decoration: line-through;
+}
+.time {
+    width: 52px;
 }
 .event-container {
 	min-height: calc(100vh - 50px);

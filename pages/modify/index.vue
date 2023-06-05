@@ -5,10 +5,11 @@
         <view class="mbody">
             <view class="title">Append Points</view>
             <view class="panel">
-				<u-grid :border="false" col="3" customStyle="padding: 12px 0;">
+				<u-grid :border="false" col="4" customStyle="padding: 12px 0;">
 					<u-grid-item></u-grid-item>
 					<u-grid-item class="home">Home</u-grid-item>
 					<u-grid-item class="away">Away</u-grid-item>
+                    <u-grid-item></u-grid-item>
 				</u-grid>
 				<view v-for="item,index in quarterList" :key="index">
 					<u-grid :border="false" col="4" customStyle="padding: 12px 0;">
@@ -20,7 +21,9 @@
 							<u-input v-model="item.away" :border="'none'"  type="number" inputAlign="center" clearable customStyle="padding:8px;border-radius:8px;border:1px solid #0A70F5;background-color:#EBF3FE;margin-left: 8px;"/>
 						</u-grid-item>
                         <u-grid-item>
-                         <view @tap="save(index)" customStyle="background: blue;color:#fff;">{{ $t("save") }}</view>
+                            <u-button @click="save(index)" class="m-btn" color="linear-gradient(135deg, #2A8EFE 0%, #0A70F5 100%)">
+                               {{ $t("save") }}
+                            </u-button>
                         </u-grid-item>
 					</u-grid>
 					<view class="divide-line" v-if="index != 3"></view>
@@ -227,5 +230,9 @@ page {
     background-color: #EEEEEE;
     width: 100%;
     box-sizing: content-box;
+}
+
+.m-btn {
+    width: 60px;
 }
 </style>

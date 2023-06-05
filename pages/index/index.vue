@@ -4,20 +4,20 @@
         <!-- 头部 -->
         <view class="score-header u-type-primary-bg u-font-12 text-white">
             <!-- 比分 -->
-            <view class="flex items-center justify-between u-padding-left-36 u-padding-right-36 u-padding-top-32 u-padding-bottom-8">
-                <view class="team flex flex-col items-center justify-center"><view class="w-full line-clamp-3 team-name text-center break-normal">{{home_team}}</view></view>
-                <view class="core flex flex-1 items-center justify-center">
-                    <span :class="[calculateGoalLength > 2 ? 'small' : '']" class="goal flex-1">{{ goal[0] }}</span>
+            <view class="flex items-center justify-between u-padding-left-6 u-padding-right-36 u-padding-top-36 u-padding-bottom-8">
+                <view class="team flex flex-1  flex-col items-center justify-center"><view class="w-full line-clamp-3 team-name text-center break-normal">Home - {{home_team}}</view></view>
+                <view customStyle="width:20px;">
+                   <!-- <span :class="[calculateGoalLength > 2 ? 'small' : '']" class="goal flex-1">{{ goal[0] }}</span>
                     <span class="split">:</span>
-                    <span :class="[calculateGoalLength > 2 ? 'small' : '']" class="goal flex-1">{{ goal[1] }}</span>
+                    <span :class="[calculateGoalLength > 2 ? 'small' : '']" class="goal flex-1">{{ goal[1] }}</span> -->
                 </view>
-                <view class="team flex flex-col items-center justify-center"><view class="w-full line-clamp-3 team-name text-center break-normal">{{guest_team}} </view></view>
+                <view class="team flex flex-1  flex-col items-center justify-center"><view class="w-full line-clamp-3 team-name text-center break-normal">Away - {{guest_team}} </view></view>
             </view>
             <!-- 时间 -->
             <view class="timer-box flex items-center justify-between u-padding-left-38 u-padding-right-38 u-padding-bottom-24">
-                <view class="sign">Home</view>
-                <view class="timer flex-1 text-center">{{position_display}} {{match_time}}</view>
-                <view class="sign">Away</view>
+                <view class="sign core flex-1 white-text">{{ goal[0] }}</view>
+                <view class="timer text-center">{{position_display}} {{match_time}}</view>
+                <view class="sign core  flex-1  white-text">{{ goal[1] }}</view>
             </view>
         </view>
         
@@ -71,13 +71,13 @@
             </u-grid>
             <!-- 第四行 -->
             <u-grid :border="false" col="3" customStyle="padding: 6px 0;" >
-                <u-grid-item class="time-sign input-box">
+                <u-grid-item class="time-sign input-box" customStyle="padding: 2px 5px;">
                     <u-input v-model="adjustTime.min" :border="'none'"  type="number" inputAlign="center" clearable customStyle="padding:6px;border-radius:8px;border:1px solid #0A70F5;background-color:#fff;"/>
                 </u-grid-item>
-                <u-grid-item class="input-box">
+                <u-grid-item class="input-box" customStyle="padding: 2px 5px;">
                     <u-input v-model="adjustTime.sec" :border="'none'"  type="number" inputAlign="center" clearable customStyle="padding:6px;border-radius:8px;border:1px solid #0A70F5;background-color:#fff;"/>
                 </u-grid-item>
-                <u-grid-item>
+                <u-grid-item customStyle="padding: 2px 5px;">
                     <u-button class="primary-blue" text="Adjust Time" @tap="sendAjustTime"></u-button>
                 </u-grid-item>
             </u-grid>
@@ -107,7 +107,7 @@
                 <u-grid-item class="middle-row">
                     <u-button class="primary-blue h-70" text="Foul" @click="show_foul = true"></u-button>
                     <u-button class="primary-red h-70 mt-8" text="Time Out" @click="handleShowBothSidesFun('Time Out')"></u-button>
-                    <u-button class="primary-blue h-70 mt-8" text="Out of Bound" @click="show_outofbound = true"></u-button>
+                    <u-button class="primary-blue h-70 mt-8" text="Out Bound" @click="show_outofbound = true"></u-button>
                     <!-- <u-button class="primary-red h-70 mt-8" text="Free Throw" @click="show_free_throw = true"></u-button> -->
                     <u-button class="plain-orange h-70 mt-8" text="Time stop" :plain="true" @click="sendTimeout"></u-button>
                 </u-grid-item>
@@ -161,7 +161,7 @@
             <view class="popup-container">
                 <view class="popup-title">Status</view>
                 <view class="flex flex-col items-center gap-16 mt-16">
-                    <u-button class="primary-blue h-42" text="Match Cancel" @tap="sendEventPk('b_match_cancel', 'show_status')"></u-button>
+                    <!-- <u-button class="primary-blue h-42" text="Match Cancel" @tap="sendEventPk('b_match_cancel', 'show_status')"></u-button> -->
                     <u-button class="primary-red h-42" text="Game Over" @tap="sendEventPk('b_game_over', 'show_status')"></u-button>
                 </view>
             </view>
@@ -213,7 +213,7 @@
         <!-- home point -->
         <u-popup :show="show_point" round="16px" mode="center" closeable @close="show_point = false">
             <view class="popup-container">
-                <view class="popup-title"><text class="capitalize">{{point_team}}</text> {{point_score}}-Points</view>
+                <view class="popup-title"><text class="capitalize"> {{point_team }} </text>{{point_score}}-Points</view>
                 <view class="flex items-center gap-23 mt-16">
                     <u-button class="primary-blue h-70" text="In" @tap="sendGoal('in')"></u-button>
                     <u-button class="primary-orange h-70" text="Miss" @tap="sendGoal('miss')"></u-button>
@@ -234,7 +234,7 @@
        <!-- out of bound -->
         <u-popup :show="show_outofbound" round="16px" mode="center" closeable @close="show_outofbound = false">
             <view class="popup-container">
-                <view class="popup-title">Out of Bound</view>
+                <view class="popup-title">Out Bound</view>
                 <view class="flex flex-col items-center gap-16 mt-16">
                     <view class="flex items-center gap-23 w-full">
                         <u-button class="primary-yellow h-70" text="Home" @tap="sendOutofbound(true)"></u-button>
@@ -269,7 +269,7 @@
         <!-- free throw -->
         <u-popup :show="show_free_throw" round="16px" mode="center" closeable @close="handleFreeThrowCloseFun">
             <view class="popup-container">
-                <view class="popup-title">Free Throw</view>
+                <view class="popup-title">Free Throw - {{checkFreeThrowTeam ? ' home' : 'away'}}</view>
                 <view class="flex flex-col items-center gap-16 mt-16">
                     <CheckBox :list="freeThrowPoints" v-model="checkFreeThrowPoint" @input="freeThrowPoint" :team="checkFreeThrowTeam"/>
                     <view class="divide-line"></view>
@@ -886,7 +886,7 @@ export default {
     height: 38px;
 }
 .team-name {
-    font-size: 14px;
+    font-size: 16px;
 }
 .score-header {
     line-height: 1.4;
@@ -916,9 +916,10 @@ export default {
             font-size: 16px;
             padding: 11px 3px;
             font-weight: bold;
+            width: 144px;
         }
         .sign {
-            color: rgba(255,255,255,0.5);
+            color: #fff;
             padding: 0 27px;
         }
     }

@@ -1,4 +1,5 @@
 <template>
+   
     <view class="event-container">
 		<view class="title u-text-center">Events</view>
 		<view class="header flex items-center">
@@ -6,30 +7,35 @@
               <text class="">{{ item.label }}</text>
             </view>
         </view>
-		<view class="content-box">
-			<view class="content flex items-center" v-for="item,index in events" :key="index">
-                <template v-if="item.status_id">
-                    <view class="col-item truncate deleted-text">{{item.qt}}</view>
-                    <view class="col-item truncate deleted-text">{{item.team_info}}</view>
-                    <view class="col-item truncate deleted-text">{{item.event_info}}</view>
-                    <view class="time truncate deleted-text">{{item.time}}</view>
-                </template>
-                <template v-else>
-                    <view class="col-item truncate">{{item.qt}}</view>
-                    <view class="col-item truncate">{{item.team_info}}</view>
-                    <view class="col-item truncate">{{item.event_info}}</view>
-                    <view class="time truncate">{{item.time}}</view>
-                    <view class="col-item small">
-                        <img class="delete" src="../../static/svg/delete.svg" alt="" @tap="deleteEvent(`${item.id}`, `${index}`)">
-                    </view>
-                 </template>
-			</view>
-		</view>
+        <z-paging ref="paging" v-model="events" use-page-scroll default-page-size="30" loading-more-no-more-text="我也是有底线的！" @query="queryList">
+            <view class="content-box">
+                <view class="content flex items-center" v-for="item,index in events" :key="index">
+                    <template v-if="item.status_id">
+                        <view class="col-item truncate deleted-text">{{item.qt}}</view>
+                        <view class="col-item truncate deleted-text">{{item.team_info}}</view>
+                        <view class="col-item truncate deleted-text">{{item.event_info}}</view>
+                        <view class="time truncate deleted-text">{{item.time}}</view>
+                    </template>
+                    <template v-else>
+                        <view class="col-item truncate">{{item.qt}}</view>
+                        <view class="col-item truncate">{{item.team_info}}</view>
+                        <view class="col-item truncate">{{item.event_info}}</view>
+                        <view class="time truncate">{{item.time}}</view>
+                        <view class="col-item small">
+                            <img class="delete" src="../../static/svg/delete.svg" alt="" @tap="deleteEvent(`${item.id}`, `${index}`)">
+                        </view>
+                     </template>
+                </view>
+            </view>
+        </z-paging>
     </view>
+  
 </template>
 
 <script>
+    import ZPMixin from '@/uni_modules/z-paging/components/z-paging/js/z-paging-mixin'
 export default {
+    	mixins: [ZPMixin],
     data() {
         return {
 			headerNav: [
@@ -47,9 +53,16 @@ export default {
              this.match_id = uni.getStorageSync('match_id');
         },
         onShow() {
-           uni.$u.http.get(`basketball/match_input/${this.match_id}/delete_event_list`, {}, {withCredentials: true}).then(res => {
-            this.events = res.data.events;
-            })
+           // uni.$u.http.get(`basketball/match_input/${this.match_id}/delete_event_list`, {}, {withCredentials: true}).then(res => {
+           //  this.events = res.data.events;
+           //  })
+        },
+        queryList(pageNo, pageSize) {
+            console.log("pageNo", pageSize, pageNo)
+            uni.$u.http.get(`basketball/match_input/${this.match_id}/delete_event_list?page=${pageNo}&limit=${pageSize}`, {}, {withCredentials: true}).then(res => {
+             // this.events = res.data.events;
+             this.$refs.paging.complete(res.data.events);
+             })
         },
         deleteEvent(id, index) {
             uni.$u.http.post(`basketball/match_input/${this.match_id}/delete_event`, {mp_id: id}, {withCredentials: true}).then(res => {

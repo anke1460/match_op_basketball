@@ -4,14 +4,14 @@
         <!-- 头部 -->
         <view class="score-header u-type-primary-bg u-font-12 text-white">
             <!-- 比分 -->
-            <view class="flex items-center justify-between u-padding-left-6 u-padding-right-36 u-padding-top-36 u-padding-bottom-8">
-                <view class="team flex flex-1  flex-col items-center justify-center"><view class="w-full line-clamp-3 team-name text-center break-normal">Home - {{home_team}}</view></view>
+            <view class="flex  justify-between u-padding-left-6  u-padding-top-36 u-padding-bottom-8">
+                <view class="team flex flex-1 "><view class="w-full line-clamp-3 team-name text-center break-normal">H - {{home_team}}</view></view>
                 <view customStyle="width:20px;">
                    <!-- <span :class="[calculateGoalLength > 2 ? 'small' : '']" class="goal flex-1">{{ goal[0] }}</span>
                     <span class="split">:</span>
                     <span :class="[calculateGoalLength > 2 ? 'small' : '']" class="goal flex-1">{{ goal[1] }}</span> -->
                 </view>
-                <view class="team flex flex-1  flex-col items-center justify-center"><view class="w-full line-clamp-3 team-name text-center break-normal">Away - {{guest_team}} </view></view>
+                <view class="team flex flex-1 "><view class="w-full line-clamp-3 team-name text-center break-normal">A - {{guest_team}} </view></view>
             </view>
             <!-- 时间 -->
             <view class="timer-box flex items-center justify-between u-padding-left-38 u-padding-right-38 u-padding-bottom-24">
@@ -925,8 +925,8 @@ export default {
     }
 }
 .event_content {
-    height: 32px;
-    line-height: 32px;
+    height: 40px;
+    line-height: 20px;
     color: #fff;
     font-weight: bold;
     background-color: #E6B002;
@@ -942,6 +942,7 @@ export default {
 	}
     .last-event-time {
         margin-right: 12px;
+        width: 84px;
     }
 }
 

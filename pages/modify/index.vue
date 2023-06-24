@@ -3,12 +3,12 @@
         <u-navbar @leftClick="leftClick" :title="$t('modify')">
         </u-navbar>
         <view class="mbody">
-            <view class="title">Append Points</view>
+            <view class="title">{{$t('append_points')}}</view>
             <view class="panel">
 				<u-grid :border="false" col="4" customStyle="padding: 12px 0;">
 					<u-grid-item></u-grid-item>
-					<u-grid-item class="home">Home</u-grid-item>
-					<u-grid-item class="away">Away</u-grid-item>
+					<u-grid-item class="home">{{$t('home')}}</u-grid-item>
+					<u-grid-item class="away">{{$t('away')}}</u-grid-item>
                     <u-grid-item></u-grid-item>
 				</u-grid>
 				<view v-for="item,index in quarterList" :key="index">

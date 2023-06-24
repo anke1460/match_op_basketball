@@ -115,6 +115,24 @@
 	"custome_text": "输入其它信息",
 	"rekick": "重新开球",
 	"match_disconnect": "连线中断",
-	"match_connect": "比赛连接"
-	
+	"match_connect": "比赛连接",
+	"quarter_start": "小节开始",
+	"quarter_end": "小节结束",
+    "fouled_ut": "犯满",
+    "substitution": "换人",
+    "adjust_time": "调整时间",
+    "free_throw": "罚球",
+    "points": "分",
+    "possession": "控球",
+    "foul": "犯规",
+    "time_out": "暂停",
+    "out_bound": "出界",
+    "time_stop": "停表",
+    "other": "其它",
+    "status": "状态",
+    "in": "得分",
+    "miss": "丢失",
+    "technical_foul": "技术犯规",
+    "game_over": "比赛结束",
+    "append_points": "修改比分"
 }

@@ -39,31 +39,31 @@
             <!-- 第一行 -->
             <u-grid :border="false" col="3">
                 <u-grid-item>
-                    <u-button class="plain-blue" text="Other" @click="show_other = true"></u-button>
+                    <u-button class="plain-blue" :text="$t('other')" @click="show_other = true"></u-button>
                 </u-grid-item>
                 <u-grid-item>
-                    <u-button class="plain-blue" text="Status" @click="show_status = true"></u-button>
+                    <u-button class="plain-blue" :text="$t('status')" @click="show_status = true"></u-button>
                 </u-grid-item>
                 <u-grid-item>
-                    <u-button class="plain-blue" text="modify" @click="handleGotoModify"></u-button>
+                    <u-button class="plain-blue" :text="$t('modify')" @click="handleGotoModify"></u-button>
                 </u-grid-item>
             </u-grid>
             <!-- 第二行 -->
             <u-grid :border="false" col="2">
                 <u-grid-item>
-                    <u-button class="primary-red h-42" text="Quarter Start" @tap="show_quarter_start_comfirm = true"></u-button>
+                    <u-button class="primary-red h-42" :text="$t('quarter_start')" @tap="show_quarter_start_comfirm = true"></u-button>
                 </u-grid-item>
                 <u-grid-item>
-                    <u-button class="primary-green h-42" text="Quarter End" @click="show_quarter_end_comfirm = true"></u-button>
+                    <u-button class="primary-green h-42" :text="$t('quarter_end')" @click="show_quarter_end_comfirm = true"></u-button>
                 </u-grid-item>
             </u-grid>
             <!-- 第三行 -->
             <u-grid :border="false" col="3">
                 <u-grid-item>
-                    <u-button class="plain-orange" text="Fouled Out" :plain="true" @click="handleShowBothSidesFun('Fouled Out')"></u-button>
+                    <u-button class="plain-orange" :text="$t('fouled_ut')" :plain="true" @click="handleShowBothSidesFun('Fouled Out')"></u-button>
                 </u-grid-item>
                 <u-grid-item>
-                    <u-button class="plain-orange" text="Substitution" :plain="true" @click="handleShowBothSidesFun('Substitution')"></u-button>
+                    <u-button class="plain-orange" :text="$t('substitution')" :plain="true" @click="handleShowBothSidesFun('Substitution')"></u-button>
                 </u-grid-item>
                 <u-grid-item>
                     <u-button class="plain-red" text="SOS" :plain="true" @click="show_sos = true"></u-button>
@@ -78,7 +78,7 @@
                     <u-input v-model="adjustTime.sec" :border="'none'"  type="number" inputAlign="center" clearable customStyle="padding:6px;border-radius:8px;border:1px solid #0A70F5;background-color:#fff;"/>
                 </u-grid-item>
                 <u-grid-item customStyle="padding: 2px 5px;">
-                    <u-button class="primary-blue" text="Adjust Time" @tap="sendAjustTime"></u-button>
+                    <u-button class="primary-blue" :text="$t('adjust_time')" @tap="sendAjustTime"></u-button>
                 </u-grid-item>
             </u-grid>
             <!-- 大块儿按钮 -->
@@ -86,49 +86,49 @@
                 <!-- 主队纵列 -->
                 <u-grid-item>
                     <u-button class="big-button h-70" color="linear-gradient(135deg, #FFB925 0%, #FF5800 100%)" @tap="sendFreeThrow(true)">
-                        <view><p>Home</p><p>Free Throw</p></view>
+                        <view><p>{{$t('event.home')}}</p><p>{{$t('free_throw')}}</p></view>
                     </u-button>
-                    <u-button @click="show_point = true; point_score = 3;point_team='home'" class="big-button flex items-center h-70 mt-8" color="linear-gradient(135deg, #FF643C 0%, #FF9E1A 100%)">
+                    <u-button @click="showPoint(true, 3)" class="big-button flex items-center h-70 mt-8" color="linear-gradient(135deg, #FF643C 0%, #FF9E1A 100%)">
                         <span class="font-specail">3</span>
-                        <view><p class="text-left">Home</p><p class="text-left">Points</p></view>
+                        <view><p class="text-left">{{$t('event.home')}}</p><p class="text-left">{{$t('points')}}</p></view>
                     </u-button>
                   <!--  <u-button class="big-button h-70 mt-8" color="linear-gradient(135deg, #FFB925 0%, #FF5800 100%)" @tap="sendRebound(true)">
                         <view><p>Home</p><p>Rebound</p></view>
                     </u-button> -->
-                    <u-button @click="show_point = true; point_score = 2;point_team='home'" class="big-button flex items-center h-70  mt-8" color="linear-gradient(135deg, #FF643C 0%, #FF9E1A 100%)">
+                    <u-button @click="showPoint(true, 2)" class="big-button flex items-center h-70  mt-8" color="linear-gradient(135deg, #FF643C 0%, #FF9E1A 100%)">
                         <span class="font-specail">2</span>
-                        <view><p class="text-left">Home</p><p class="text-left">Points</p></view>
+                        <view><p class="text-left">{{$t('event.home')}}</p><p class="text-left">{{$t('points')}}</p></view>
                     </u-button>
                     <u-button class="big-button primary-red h-70 mt-8" @tap="sendAttack(true)">
-                        <view><p>Home</p><p>Possession</p></view>
+                        <view><p>{{$t('event.home')}}</p><p>{{$t('possession')}}</p></view>
                     </u-button>
                 </u-grid-item>
                 <!-- 中间 -->
                 <u-grid-item class="middle-row">
-                    <u-button class="primary-blue h-70" text="Foul" @click="show_foul = true"></u-button>
-                    <u-button class="primary-red h-70 mt-8" text="Time Out" @click="handleShowBothSidesFun('Time Out')"></u-button>
-                    <u-button class="primary-blue h-70 mt-8" text="Out Bound" @click="show_outofbound = true"></u-button>
+                    <u-button class="primary-blue h-70" :text="$t('foul')" @click="show_foul = true"></u-button>
+                    <u-button class="primary-red h-70 mt-8" :text="$t('time_out')" @click="handleShowBothSidesFun('Time Out')"></u-button>
+                    <u-button class="primary-blue h-70 mt-8" :text="$t('out_bound')" @click="show_outofbound = true"></u-button>
                     <!-- <u-button class="primary-red h-70 mt-8" text="Free Throw" @click="show_free_throw = true"></u-button> -->
-                    <u-button class="plain-orange h-70 mt-8" text="Time stop" :plain="true" @click="sendTimeout"></u-button>
+                    <u-button class="plain-orange h-70 mt-8" :text="$t('time_stop')" :plain="true" @click="sendTimeout"></u-button>
                 </u-grid-item>
                 <!-- 客队纵列 -->
                 <u-grid-item>
                     <u-button class="big-button primary-green h-70" @tap="sendFreeThrow(false)">
-                        <view><p>Away</p><p>Free Throw</p></view>
+                        <view><p>{{$t('event.away')}}</p><p>{{$t('free_throw')}}</p></view>
                     </u-button>
-                    <u-button @click="show_point = true; point_score = 3;point_team='away'" class="big-button h-70 mt-8" color="linear-gradient(135deg, #A1D321 0%, #43B800 100%)">
+                    <u-button @click="showPoint(false, 3)" class="big-button h-70 mt-8" color="linear-gradient(135deg, #A1D321 0%, #43B800 100%)">
                         <span class="font-specail">3</span>
-                        <div><p>Away</p><p>Points</p></div>
+                        <div><p>{{$t('event.away')}}</p><p>{{$t('points')}}</p></div>
                     </u-button>
                   <!--  <u-button class="big-button primary-green h-70 mt-8" @tap="sendRebound(false)">
                         <view><p>Away</p><p>Rebound</p></view>
                     </u-button> -->
-                    <u-button @click="show_point = true; point_score = 2;point_team='away'" class="big-button flex items-center h-70  mt-8" color="linear-gradient(135deg, #1CCEB9 0%, #00B3A1 100%)">
+                    <u-button @click="showPoint(false, 2)" class="big-button flex items-center h-70  mt-8" color="linear-gradient(135deg, #1CCEB9 0%, #00B3A1 100%)">
                         <span class="font-specail">2</span>
-                        <view><p class="text-left">Away</p><p class="text-left">Points</p></view>
+                        <view><p class="text-left">{{$t('event.away')}}</p><p class="text-left">{{$t('points')}}</p></view>
                     </u-button>
                     <u-button class="big-button h-70 mt-8" color="linear-gradient(135deg, #1CB8CE 0%, #008BB3 100%)" @tap="sendAttack(false)">
-                        <view><p>Away</p><p>Possession</p></view>
+                        <view><p>{{$t('event.away')}}</p><p>{{$t('possession')}}</p></view>
                     </u-button>
                 </u-grid-item>
             </u-grid>
@@ -138,7 +138,7 @@
         <!-- status -->
         <u-popup :show="show_other" round="16px" mode="center" closeable @close="show_other = false">
             <view class="popup-container">
-                <view class="popup-title">Other</view>
+                <view class="popup-title">{{$t('other')}}</view>
                 <view class="flex flex-col items-center gap-16 mt-16">
                     <u-button class="primary-blue h-42" text="Player warm-up" @tap="sendOther('Player warm-up')"></u-button>
                     <u-button class="primary-blue h-42" text="Players coming out" @tap="sendOther('Players coming out')"></u-button>
@@ -147,9 +147,9 @@
                     <u-button class="primary-green h-42" text="Coach Challenge" @tap="sendOther('Coach Challenge')"></u-button>
                     <u-button class="primary-green h-42" text="VAR Checking" @tap="sendOther('VAR Checking')"></u-button>
                     <view class="divide-line"></view>
-                    <u-input placeholder="Need custom text?" fontSize="12" :border="'none'" v-model="custom_text"  customStyle="height:38px;border-radius:9px;display:block;width:100%;border:1px solid #0A70F5;padding:0 0 0 12px;overflow:hidden;" >
+                    <u-input :placeholder="$t('custome_text')" fontSize="12" :border="'none'" v-model="custom_text"  customStyle="height:38px;border-radius:9px;display:block;width:100%;border:1px solid #0A70F5;padding:0 0 0 12px;overflow:hidden;" >
                         <template slot="suffix">
-                            <u-button text="Send" class="primary-blue" size="mini" @tap="sendOther"></u-button>
+                            <u-button :text="$t('send')" class="primary-blue" size="mini" @tap="sendOther"></u-button>
                         </template>
                     </u-input>
                 </view>
@@ -159,10 +159,10 @@
         <!-- status -->
         <u-popup :show="show_status" round="16px" mode="center" closeable @close="show_status = false">
             <view class="popup-container">
-                <view class="popup-title">Status</view>
+                <view class="popup-title">{{$t('status')}}</view>
                 <view class="flex flex-col items-center gap-16 mt-16">
                     <!-- <u-button class="primary-blue h-42" text="Match Cancel" @tap="sendEventPk('b_match_cancel', 'show_status')"></u-button> -->
-                    <u-button class="primary-red h-42" text="Game Over" @tap="sendEventPk('b_game_over', 'show_status')"></u-button>
+                    <u-button class="primary-red h-42" :text="$t('game_over')" @tap="sendEventPk('b_game_over', 'show_status')"></u-button>
                 </view>
             </view>
         </u-popup>
@@ -182,15 +182,15 @@
         <u-modal 
             :show="show_quarter_start_comfirm" 
             :showCancelButton="true" 
-            :cancelText="'Cancel'" 
-            :confirmText="'OK'" 
+            :cancelText="$t('cancel')" 
+            :confirmText="$t('confirm')" 
             confirmColor="#0A70F5" 
             width="295"
             @confirm="handleQuarterComfirm"
             @cancel="show_quarter_start_comfirm = false"
         >
             <template #default>
-                <view class="modal-content">Are you sure you want to send this event?</view>
+                <view class="modal-content">{{$t('confirm_text')}}</view>
             </template>
         </u-modal>
 
@@ -198,25 +198,25 @@
         <u-modal 
             :show="show_quarter_end_comfirm" 
             :showCancelButton="true" 
-            :cancelText="'Cancel'" 
-            :confirmText="'OK'" 
+            :cancelText="$t('cancel')" 
+            :confirmText="$t('confirm')" 
             confirmColor="#0A70F5" 
             width="295"
             @confirm="handleQuarterEndComfirm"
             @cancel="show_quarter_end_comfirm = false"
         >
             <template #default>
-                <view class="modal-content">Are you sure you want to send this event?</view>
+                <view class="modal-content">{{$t('confirm_text')}}</view>
             </template>
         </u-modal>
         
         <!-- home point -->
         <u-popup :show="show_point" round="16px" mode="center" closeable @close="show_point = false">
             <view class="popup-container">
-                <view class="popup-title"><text class="capitalize"> {{point_team }} </text>{{point_score}}-Points</view>
+                <view class="popup-title"><text> {{ points_title }}</text></view>
                 <view class="flex items-center gap-23 mt-16">
-                    <u-button class="primary-blue h-70" text="In" @tap="sendGoal('in')"></u-button>
-                    <u-button class="primary-orange h-70" text="Miss" @tap="sendGoal('miss')"></u-button>
+                    <u-button class="primary-blue h-70" :text="$t('in')" @tap="sendGoal('in')"></u-button>
+                    <u-button class="primary-orange h-70" :text="$t('miss')" @tap="sendGoal('miss')"></u-button>
                 </view>
             </view>
         </u-popup>
@@ -226,19 +226,19 @@
             <view class="popup-container">
                 <view class="popup-title">SOS</view>
                 <view class="flex flex-col items-center gap-16 mt-16">
-                    <u-button class="primary-red h-42" text="Match Disconnect" @tap="send_disconnect"></u-button>
-                    <u-button class="primary-green h-42" text="Match Connect" @tap="send_connect"></u-button>
+                    <u-button class="primary-red h-42" :text="$t('match_disconnect')" @tap="send_disconnect"></u-button>
+                    <u-button class="primary-green h-42" :text="$t('match_connect')" @tap="send_connect"></u-button>
                 </view>
             </view>
         </u-popup>
        <!-- out of bound -->
         <u-popup :show="show_outofbound" round="16px" mode="center" closeable @close="show_outofbound = false">
             <view class="popup-container">
-                <view class="popup-title">Out Bound</view>
+                <view class="popup-title">{{$t('out_bound')}}</view>
                 <view class="flex flex-col items-center gap-16 mt-16">
                     <view class="flex items-center gap-23 w-full">
-                        <u-button class="primary-yellow h-70" text="Home" @tap="sendOutofbound(true)"></u-button>
-                        <u-button class="primary-green h-70" text="Away" @tap="sendOutofbound(false)"></u-button>
+                        <u-button class="primary-yellow h-70" :text="$t('home')" @tap="sendOutofbound(true)"></u-button>
+                        <u-button class="primary-green h-70" :text="$t('away')" @tap="sendOutofbound(false)"></u-button>
                     </view>
                 </view>
             </view>
@@ -246,22 +246,22 @@
         <!-- Foul -->
         <u-popup :show="show_foul" round="16px" mode="center" closeable @close="show_foul = false">
             <view class="popup-container">
-                <view class="popup-title">Foul</view>
+                <view class="popup-title">{{$t('foul')}}</view>
                 <view class="flex flex-col items-center gap-16 mt-16">
                     <view class="flex items-center gap-23 w-full">
-                        <u-button class="primary-yellow h-70" text="Home" @tap="sendFoul(true)"></u-button>
-                        <u-button class="primary-green h-70" text="Away" @tap="sendFoul(false)"></u-button>
+                        <u-button class="primary-yellow h-70" :text="$t('home')" @tap="sendFoul(true)"></u-button>
+                        <u-button class="primary-green h-70" :text="$t('away')" @tap="sendFoul(false)"></u-button>
                     </view>
-                    <u-button class="primary-blue h-48" text="Technical Foul" @click="show_technical_foul = true;show_foul = false"></u-button>
+                    <u-button class="primary-blue h-48" :text="$t('technical_foul')" @click="show_technical_foul = true;show_foul = false"></u-button>
                 </view>
             </view>
         </u-popup>
         <u-popup :show="show_technical_foul" round="16px" mode="center" closeable @close="show_technical_foul = false">
             <view class="popup-container">
-                <view class="popup-title">Technical Foul</view>
+                <view class="popup-title">{{$t('technical_foul')}}</view>
                 <view class="flex items-center gap-23 w-full mt-16">
-                    <u-button class="primary-yellow h-70" text="Home" @tap="sendTechFoul(true)"></u-button>
-                    <u-button class="primary-green h-70" text="Away" @tap="sendTechFoul(false)"></u-button>
+                    <u-button class="primary-yellow h-70" :text="$t('home')" @tap="sendTechFoul(true)"></u-button>
+                    <u-button class="primary-green h-70" :text="$t('away')" @tap="sendTechFoul(false)"></u-button>
                 </view>
             </view>
         </u-popup>
@@ -269,13 +269,13 @@
         <!-- free throw -->
         <u-popup :show="show_free_throw" round="16px" mode="center" closeable @close="handleFreeThrowCloseFun">
             <view class="popup-container">
-                <view class="popup-title">Free Throw - {{checkFreeThrowTeam ? ' home' : 'away'}}</view>
+                <view class="popup-title">{{$t('free_throw')}} - {{checkFreeThrowTeam ? " " + $t('home') : $t('away')}}</view>
                 <view class="flex flex-col items-center gap-16 mt-16">
                     <CheckBox :list="freeThrowPoints" v-model="checkFreeThrowPoint" @input="freeThrowPoint" :team="checkFreeThrowTeam"/>
                     <view class="divide-line"></view>
                     <view class="flex items-center gap-23 w-full">
-                        <u-button class="primary-blue h-70"  @click="handleFreeThrowFun('b_ft_goal')">In</u-button>
-                        <u-button class="primary-orange h-70"  @click="handleFreeThrowFun('b_ft_miss')">Miss</u-button>
+                        <u-button class="primary-blue h-70"  @click="handleFreeThrowFun('b_ft_goal')">{{$t('in')}}</u-button>
+                        <u-button class="primary-orange h-70"  @click="handleFreeThrowFun('b_ft_miss')">{{$t('miss')}}</u-button>
                     </view>
                 </view>
             </view>
@@ -284,7 +284,7 @@
         <!-- time stop -->
         <u-popup :show="show_time_stop" round="16px" mode="center" closeable @close="show_time_stop = false">
             <view class="popup-container">
-                <view class="popup-title">Time Stop</view>
+                <view class="popup-title">{{$t('time_stop')}}</view>
                 <view class="flex flex-col items-center gap-16 mt-16">
                     <u-button class="primary-blue h-42" text="Time Out" @click="handleShowBothSidesFun('Time Out')"></u-button>
                     <u-button class="primary-blue h-42" text="Play Injury" @click="handleShowBothSidesFun('Play Injury')"></u-button>
@@ -303,12 +303,23 @@
         <!-- HOME AWAY 只有主客队按钮的弹窗 -->
         <u-popup :show="show_both_sides" round="16px" mode="center" closeable @close="show_both_sides = false">
             <view class="popup-container">
-                <view class="popup-title">{{ popupBothSidesName }}</view>
+                <view class="popup-title">{{ popTitle }}</view>
                 <view class="flex items-center gap-23 mt-16">
-                    <u-button class="primary-yellow h-70" text="Home" @tap="sendNormalEvent(true)"></u-button>
-                    <u-button class="primary-green h-70" text="Away" @tap="sendNormalEvent(false)"></u-button>
+                    <u-button class="primary-yellow h-70" :text="$t('home')" @tap="sendNormalEvent(true)"></u-button>
+                    <u-button class="primary-green h-70" :text="$t('away')" @tap="sendNormalEvent(false)"></u-button>
                 </view>
             </view>
+        </u-popup>
+        <u-popup :show="op_disabled" round="16px" mode="center" :overlayStyle="{zIndex: 99099}" zIndex="9999999">
+        	<view class="popup-container">
+        		<view class="u-text-center color-red">Hi!</view>
+        		<view class="color-red">Operation is frozen. Please contact duty officer</view>
+        		<view class="btn-content">
+        			<u-button color="#2A8EFE" text="Refresh" size="large"
+        				customStyle="height:40px;board-radius: 12px; margin-top:20px;" @tap="setMatchTime()">
+        			</u-button>
+        		</view>
+        	</view>
         </u-popup>
         <u-notify ref="uNotify" message=""></u-notify>
     </view>
@@ -352,6 +363,7 @@ export default {
             show_time_stop: false,
             show_both_sides: false,  // 只有主客队按钮的弹窗
             popupBothSidesName: '', // 只有主客队按钮的弹窗 title
+            popTitle: '',
             // free throw 的选择值
             checkFreeThrowTeam: '', // free throw 选择的队伍, 默认选择 home
             checkFreeThrowPoint: '', // free throw 选择的分数，默认选择 2
@@ -374,8 +386,8 @@ export default {
             event_text: "", //发送事件内容
             match_id: "",
             match_time: "", // 比赛时间,
-            event_time: "2nd Q - 10'00", //事件时间
-            event_content: "Quarter Start", //事件内容
+            event_time: "", //事件时间
+            event_content: "", //事件内容
             injury_time: "",
             match_sec: 0,
             youth_race: "",
@@ -408,6 +420,7 @@ export default {
             pk: "",
             status: '',
             position: '',
+            points_title: "",
         };
     },
     computed: {
@@ -513,6 +526,11 @@ export default {
         				}, 1000)
         			}
         		}
+                
+                if (this.op_disabled && res.data.app_op == null) {
+                	window.location.reload()
+                }
+                this.op_disabled = res.data.app_op == 1;
         	}, (res) => {
         		this.$refs.uNotify.show({
         			top: 10,
@@ -525,6 +543,18 @@ export default {
         			safeAreaInsetTop:true
         		})
         	})
+        },
+        
+        showPoint(is_home, point) {
+           this.show_point = true; 
+           this.point_score = point;
+           this.point_team = is_home ? 'home' : 'away';
+           
+           if (this.lang == 'zh-Hans') {
+               this.points_title = (is_home ? '主队' : "客队") + "-" + point + "分";
+           } else {
+               this.points_title = (is_home ? 'Home' : "Away") + "-" + point + "Points";
+           }
         },
 
         handleFreeThrowFun(type) {
@@ -545,7 +575,22 @@ export default {
             this.show_both_sides = true
             this.show_time_stop = false
             this.show_other = false;
-            this.popupBothSidesName = name
+            this.popupBothSidesName = name;
+            if (this.lang == 'zh-Hans') {
+                if (name == 'Time Out') {
+                     this.popTitle = '暂停';
+                } else if (name = 'Substitution') {
+                     this.popTitle = '换人';
+                } else if (name = 'Fouled Out') {
+                     this.popTitle = '犯满';
+                } else {
+                    this.popTitle = name; 
+                }
+               
+            } else {
+                this.popTitle = name;
+            }
+           
         },
 
         handleGotoModify() {
@@ -797,16 +842,21 @@ export default {
         }
          uni.$u.http.post(`basketball/match_input/${this.match_id}/create_event`, params, {withCredentials: true}).then(res => {
              if (res.data.success == false) {
-                this.$refs.uNotify.show({
-                    top: 10,
-                    type: 'error',
-                    color: '#fff',
-                    bgColor: '#e5291e',
-                    message: res.data.msg,
-                    duration: 1000 * 2,
-                    fontSize: 20,
-                    safeAreaInsetTop:true
-                })
+                 
+                if (res.data.app_op) {
+                    this.op_disabled = true;
+                } else {
+                    this.$refs.uNotify.show({
+                        top: 10,
+                        type: 'error',
+                        color: '#fff',
+                        bgColor: '#e5291e',
+                        message: res.data.msg,
+                        duration: 1000 * 2,
+                        fontSize: 20,
+                        safeAreaInsetTop:true
+                    })
+              }
              } else {
                  if (params.pk != 'b_adjust_time') {
                      // 调整事件不需要提示闪烁

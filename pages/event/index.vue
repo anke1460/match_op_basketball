@@ -1,7 +1,7 @@
 <template>
    
     <view class="event-container">
-		<view class="title u-text-center">Events</view>
+		<view class="title u-text-center">{{$t('index.events')}}</view>
 		<view class="header flex items-center">
             <view class="" :class="[index == 3?'small time':'col-item']" v-for="item,index in headerNav" :key="index">
               <text class="">{{ item.label }}</text>
@@ -28,6 +28,7 @@
                 </view>
             </view>
         </z-paging>
+        <u-notify ref="uNotify" message=""></u-notify>
     </view>
   
 </template>

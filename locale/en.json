@@ -115,6 +115,24 @@
 	"custome_text": "Need custom text?",
 	"rekick": "Re-kick",
 	"match_disconnect": "Match Disconnect",
-	"match_connect": "Match Connect"
-	
+	"match_connect": "Match Connect",
+	"quarter_start": "Quarter Start",
+    "quarter_end": "Quarter End",
+    "fouled_ut": "Fouled Out",
+    "substitution": "Substitution",
+    "adjust_time": "Adjust Time",
+    "free_throw": "Free Throw",
+    "points": "Points",
+    "possession": "Possession",
+    "foul": "Foul",
+    "time_out": "Time Out",
+    "out_bound": "Out Bound",
+    "time_stop": "Time Stop",
+    "other": "Other",
+    "status": "Status",
+    "in": "In",
+    "miss": "Miss",
+    "technical_foul": "Technical Foul",
+    "game_over": "Game Over",
+    "append_points": "Append Points"
 }

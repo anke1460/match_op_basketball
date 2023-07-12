@@ -269,7 +269,7 @@
         <!-- free throw -->
         <u-popup :show="show_free_throw" round="16px" mode="center" closeable @close="handleFreeThrowCloseFun">
             <view class="popup-container">
-                <view class="popup-title">{{$t('free_throw')}} - {{checkFreeThrowTeam ? " " + $t('home') : $t('away')}}</view>
+                <view class="popup-title">{{$t('free_throw')}} - {{checkFreeThrowTeam == "home" ? " " + $t('home') : $t('away')}}</view>
                 <view class="flex flex-col items-center gap-16 mt-16">
                     <CheckBox :list="freeThrowPoints" v-model="checkFreeThrowPoint" @input="freeThrowPoint" :team="checkFreeThrowTeam"/>
                     <view class="divide-line"></view>

@@ -134,5 +134,12 @@
     "miss": "Miss",
     "technical_foul": "Technical Foul",
     "game_over": "Game Over",
-    "append_points": "Append Points"
+    "append_points": "Append Points",
+    "Player_warm-up": "Player warm-up",
+    "Players_coming_out": "Players coming out",
+    "Game_will_start_soon": "Game will start soon",
+    "Play_Injury": "Play Injury",
+    "Coach_Challenge": "Coach Challenge",
+    "VAR_Checking": "VAR Checking"
+    
 }

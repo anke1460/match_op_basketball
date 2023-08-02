@@ -134,5 +134,11 @@
     "miss": "丢失",
     "technical_foul": "技术犯规",
     "game_over": "比赛结束",
-    "append_points": "修改比分"
+    "append_points": "修改比分",
+    "Player_warm-up": "球员热身中",
+    "Players_coming_out": "队员出场",
+    "Game_will_start_soon": "比赛即将开始",
+    "Play_Injury": "队员受伤",
+    "Coach_Challenge": "挑战裁判",
+    "VAR_Checking": "查看VAR"
 }

@@ -140,12 +140,12 @@
             <view class="popup-container">
                 <view class="popup-title">{{$t('other')}}</view>
                 <view class="flex flex-col items-center gap-16 mt-16">
-                    <u-button class="primary-blue h-42" text="Player warm-up" @tap="sendOther('Player warm-up')"></u-button>
-                    <u-button class="primary-blue h-42" text="Players coming out" @tap="sendOther('Players coming out')"></u-button>
-                    <u-button class="primary-blue h-42" text="Game will start soon" @tap="sendOther('Game will start soon')"></u-button>
-                    <u-button class="primary-green h-42" text="Play Injury" @click="handleShowBothSidesFun('Play Injury')"></u-button>
-                    <u-button class="primary-green h-42" text="Coach Challenge" @tap="sendOther('Coach Challenge')"></u-button>
-                    <u-button class="primary-green h-42" text="VAR Checking" @tap="sendOther('VAR Checking')"></u-button>
+                    <u-button class="primary-blue h-42" :text="$t('Player_warm-up')" @tap="sendOther('Player warm-up')"></u-button>
+                    <u-button class="primary-blue h-42" :text="$t('Players_coming_out')" @tap="sendOther('Players coming out')"></u-button>
+                    <u-button class="primary-blue h-42" :text="$t('Game_will_start_soon')" @tap="sendOther('Game will start soo')"></u-button>
+                    <u-button class="primary-green h-42" :text="$t('Play_Injury')" @click="handleShowBothSidesFun('Play Injury')"></u-button>
+                    <u-button class="primary-green h-42" :text="$t('Coach_Challenge')" @tap="sendOther('Coach Challenge')"></u-button>
+                    <u-button class="primary-green h-42" :text="$t('VAR_Checking')" @tap="sendOther('VAR Checking')"></u-button>
                     <view class="divide-line"></view>
                     <u-input :placeholder="$t('custome_text')" fontSize="12" :border="'none'" v-model="custom_text"  customStyle="height:38px;border-radius:9px;display:block;width:100%;border:1px solid #0A70F5;padding:0 0 0 12px;overflow:hidden;" >
                         <template slot="suffix">

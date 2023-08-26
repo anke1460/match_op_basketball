@@ -142,7 +142,7 @@
                 <view class="flex flex-col items-center gap-16 mt-16">
                     <u-button class="primary-blue h-42" :text="$t('Player_warm-up')" @tap="sendOther('Player warm-up')"></u-button>
                     <u-button class="primary-blue h-42" :text="$t('Players_coming_out')" @tap="sendOther('Players coming out')"></u-button>
-                    <u-button class="primary-blue h-42" :text="$t('Game_will_start_soon')" @tap="sendOther('Game will start soo')"></u-button>
+                    <u-button class="primary-blue h-42" :text="$t('Game_will_start_soon')" @tap="sendOther('Game will start soon')"></u-button>
                     <u-button class="primary-green h-42" :text="$t('Play_Injury')" @click="handleShowBothSidesFun('Play Injury')"></u-button>
                     <u-button class="primary-green h-42" :text="$t('Coach_Challenge')" @tap="sendOther('Coach Challenge')"></u-button>
                     <u-button class="primary-green h-42" :text="$t('VAR_Checking')" @tap="sendOther('VAR Checking')"></u-button>

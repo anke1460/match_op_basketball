@@ -21,7 +21,7 @@
                         <view class="col-item truncate">{{item.team_info}}</view>
                         <view class="col-item truncate">{{item.event_info}}</view>
                         <view class="time truncate">{{item.time}}</view>
-                        <view class="col-item small">
+                        <view class="col-item small" v-if="item.can_deleted">
                             <img class="delete" src="../../static/svg/delete.svg" alt="" @tap="deleteEvent(`${item.id}`, `${index}`)">
                         </view>
                      </template>
@@ -60,7 +60,7 @@ export default {
         },
         queryList(pageNo, pageSize) {
             console.log("pageNo", pageSize, pageNo)
-            uni.$u.http.get(`basketball/match_input/${this.match_id}/delete_event_list?page=${pageNo}&limit=${pageSize}`, {}, {withCredentials: true}).then(res => {
+            uni.$u.http.get(`basketball/match_input/${this.match_id}/all_event_list?page=${pageNo}&limit=${pageSize}`, {}, {withCredentials: true}).then(res => {
              // this.events = res.data.events;
              this.$refs.paging.complete(res.data.events);
              })

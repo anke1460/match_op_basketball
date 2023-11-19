@@ -88,8 +88,8 @@
                     <u-button class="big-button h-70" color="linear-gradient(135deg, #FFB925 0%, #FF5800 100%)" @tap="sendFreeThrow(true)">
                         <view><p>{{$t('event.home')}}</p><p>{{$t('free_throw')}}</p></view>
                     </u-button>
-                    <u-button @click="showPoint(true, 3)" class="big-button flex items-center h-70 mt-8" color="linear-gradient(135deg, #FF643C 0%, #FF9E1A 100%)">
-                        <span class="font-specail">3</span>
+                    <u-button @click="showPoint(true, 1)" class="big-button flex items-center h-70 mt-8" color="linear-gradient(135deg, #FF643C 0%, #FF9E1A 100%)">
+                        <span class="font-specail">1</span>
                         <view><p class="text-left">{{$t('event.home')}}</p><p class="text-left">{{$t('points')}}</p></view>
                     </u-button>
                   <!--  <u-button class="big-button h-70 mt-8" color="linear-gradient(135deg, #FFB925 0%, #FF5800 100%)" @tap="sendRebound(true)">
@@ -116,8 +116,8 @@
                     <u-button class="big-button primary-green h-70" @tap="sendFreeThrow(false)">
                         <view><p>{{$t('event.away')}}</p><p>{{$t('free_throw')}}</p></view>
                     </u-button>
-                    <u-button @click="showPoint(false, 3)" class="big-button h-70 mt-8" color="linear-gradient(135deg, #A1D321 0%, #43B800 100%)">
-                        <span class="font-specail">3</span>
+                    <u-button @click="showPoint(false, 1)" class="big-button h-70 mt-8" color="linear-gradient(135deg, #A1D321 0%, #43B800 100%)">
+                        <span class="font-specail">1</span>
                         <div><p>{{$t('event.away')}}</p><p>{{$t('points')}}</p></div>
                     </u-button>
                   <!--  <u-button class="big-button primary-green h-70 mt-8" @tap="sendRebound(false)">
@@ -206,7 +206,7 @@
             @cancel="show_quarter_end_comfirm = false"
         >
             <template #default>
-                <view class="modal-content">{{$t('confirm_text')}}</view>
+                <view class="modal-content">{{position > 1 ? 'Game Over ' : ''}}{{$t('confirm_text')}}</view>
             </template>
         </u-modal>
         
@@ -376,7 +376,7 @@ export default {
             freeThrowPoints: [
                 { label: '1', value: '1' },
                 { label: '2', value: '2' },
-                { label: '3', value: '3' },
+               // { label: '3', value: '3' },
             ],       
 
             custom_text: "",
@@ -520,7 +520,12 @@ export default {
         			if (!this.time_inter) {
         				this.time_inter = setInterval(()=> {
                             if (this.match_sec > 0) {
-                                this.match_sec -= 1;
+                                if (this.position > 1) {
+                                    this.match_sec += 1;
+                                } else {
+                                    this.match_sec -= 1;
+                                }
+                                
                             }
         					this.match_time  = this.game_time_display(this.match_sec)
         				}, 1000)
@@ -912,7 +917,9 @@ export default {
             } else {
             	if (!this.time_inter) {
             		this.time_inter = setInterval(()=> {
-                        if (this.match_sec > 0) {
+                        if (this.position > 1) {
+                            this.match_sec += 1;
+                        } else {
                             this.match_sec -= 1;
                         }
             			this.match_time  = this.game_time_display(this.match_sec)

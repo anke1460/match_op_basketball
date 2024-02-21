@@ -121,7 +121,7 @@ export default {
 		},
 		submit() {
 			if(this.model.account && this.model.code) {
-				uni.$u.http.post('orbit_base/auth_basketball', {user: this.model.account, code: this.model.code}).then(res => {
+				uni.$u.http.post('orbit_base/auth_basketball', {user: this.model.account, code: this.model.code, b3: 't'}).then(res => {
 					if (res.data.success) {
 						uni.setStorageSync('token', res.data.token);
 						uni.setStorageSync('match_id', res.data.id);

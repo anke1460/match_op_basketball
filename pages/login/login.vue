@@ -136,7 +136,7 @@ export default {
 								// config.baseURL = `http://test.kospt.win/`;
 								// config.baseURL = `http://localhost:3003/`;
 								// config.baseURL = `http://20.255.63.11/`;
-								config.baseURL = `http://kospt.win/`
+								config.baseURL = `https://kospt.win/`
 						    return config
 						})
 						this.$u.route({

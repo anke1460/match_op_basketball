@@ -347,6 +347,7 @@ export default {
             bg_color: "background-color: #085BC9",
             match_events: {},
             // 弹窗是否显示
+            isSendEvent: false,
             show_other: false,
             show_status: false,
             show_quarter_start: false,
@@ -834,6 +835,10 @@ export default {
         },
         
         sendEvent(params) {
+            if (this.isSendEvent) {
+                return
+            }
+            this.isSendEvent = true;
         if (params.pk == 'b_foul') {
             if (this.time_inter) {
             	clearInterval(this.time_inter);
@@ -841,6 +846,7 @@ export default {
             }
         }
          uni.$u.http.post(`basketball/match_input/${this.match_id}/create_event`, params, {withCredentials: true}).then(res => {
+             this.isSendEvent = false;
              if (res.data.success == false) {
                  
                 if (res.data.app_op) {
